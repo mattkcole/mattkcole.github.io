@@ -47,7 +47,7 @@ author:
   name: Matt Cole
   email: "mattcole1093@gmail.com"
   facebook: yourname  # eg. daattali
-  github: yourname    # eg. daattali
+  github: mattkcole    # eg. daattali
   twitter: mattcol3   # eg. daattali
   reddit: yourname    # eg. daattali
   google-plus: +yourname   # eg. +DeanAttali or 109424658772469020925
@@ -62,7 +62,7 @@ author:
 
 # Select which links to show in the footer
 footer-links-active:
-  rss: false
+  rss: true
   facebook: false
   email: true
   twitter: true
@@ -106,7 +106,7 @@ excerpt_length: 50
 # --- Don't need to touch anything below here (but you can if you want) --- #
 
 # Output options (more information on Jekyll's site)
-timezone: "America/Vancouver"
+timezone: "America/New_York"
 markdown: kramdown
 highlighter: rouge
 permalink: /:year-:month-:day-:title/

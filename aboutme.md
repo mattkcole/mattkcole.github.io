@@ -1,9 +1,11 @@
 ---
 layout: page
 title: About me
-subtitle: Why you'd want to go on a date with me
+subtitle: Or - why you'd like to say hi.
 ---
 
 howdy,
 
-My name is Matt Cole, currently a masters student at Johns Hopkins SPH in the biostatistics department 
+I'm Matt Cole, currently a biostatistics masters student at the Johns Hopkins School of Public Health in the biostatistics department.
+
+Please, click a while.
