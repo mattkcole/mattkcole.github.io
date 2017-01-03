@@ -1,10 +1,12 @@
 ---
 title: "Backwards Selection"
 author: "Matt Cole"
+date: "12/21/2016"
 output: md_document
 ---
 
-The problem of covariate selection can be tough, how can we include relevant and _*_ variables while excluding those with superflouris 
+
+The problem of covariate selection can be tough, how can we include relevant and _*_ variables while excluding those with superfluous
 
 
 # forward selection
@@ -112,6 +114,6 @@ double_sig
 ####
 natural progression:
 
-* generalize to 3 + covariates in MLR 
+* generalize to 3 + covariates in MLR
 * shiny app
-* 
+*

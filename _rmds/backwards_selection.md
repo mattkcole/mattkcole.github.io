@@ -1,5 +1,8 @@
+print("--- layout: post title: Pirates arrrr tags: [pirates,
+random] ---")
+
 The problem of covariate selection can be tough, how can we include
-relevant and \_\*\_ variables while excluding those with superflouris
+relevant and \_\*\_ variables while excluding those with superfluous
 
 forward selection
 =================
