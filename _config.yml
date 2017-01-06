@@ -7,11 +7,6 @@
 url: "http://mattkcole.github.io"
 baseurl: ""
 
-# If you are building a GitHub project page then use these settings:
-#url: "http://username.github.io/projectname"
-#baseurl: "/projectname"
-
-# Of course don't forget to change the username and projectname to YOUR username and project
 
 # Name of website
 title: Matt Cole
@@ -58,7 +53,7 @@ author:
   instagram: yourname # eg. daattali
   youtube: yourlink   # eg. user/daattali or channel/daattali
   spotify: yourname   # eg. daattali
-  telephone: yourphone   # eg. +14159998888
+  telephone: phonenumb   # eg. +14159998888
 
 # Select which links to show in the footer
 footer-links-active:
@@ -94,7 +89,7 @@ url-pretty: "MattKCole.com"  # eg. "deanattali.com/beautiful-jekyll"
 #disqus: ""
 
 # Fill in your Google Analytics ID to track your website using GA
-#google_analytics: ""
+google_analytics: "UA-58198392-1"
 
 # Facebook App ID
 # fb_app_id: ""
