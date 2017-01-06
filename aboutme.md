@@ -4,8 +4,8 @@ title: About me
 subtitle: Or - why you'd like to say hi.
 ---
 
-howdy,
+Howdy,
 
-I'm Matt Cole, currently a biostatistics masters student at the Johns Hopkins School of Public Health in the biostatistics department.
+I'm Matt Cole, currently a masters student at the [Johns Hopkins School of Public Health](https://www.jhsph.edu/) in the [biostats](http://www.jhsph.edu/departments/biostatistics/) department.
 
-Please, click a while.
+Please, click around a while.
