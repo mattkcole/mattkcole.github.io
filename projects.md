@@ -5,20 +5,20 @@ subtitle: What I've been doing instead of matching socks
 ---
 ## Machine Learning
 
--  **[Politi-troll](https://google.com)** -
+-  **[Politi-troll](https://github.com/mattkcole/politi-troll)** - A twitter bot and troll classifier built in R.
 
 ## Shiny
 
--  **[JHU mindfulness](https://google.com)** - test for taht app booiiii
+-  **[JHU mindfulness](https://jhubiostatistics.shinyapps.io/mindfulness/)** - A mindfulness R/Shiny app built to prodive clinitians with audio playback tracking abilities for a study of an intervention with new mothers. Check out the [repo](https://github.com/mattkcole/mindfulness/) for login instructions and a breakdown of capabilities.
 
 ## R Packages
 
--  **[FAtools](https://github.com/mattkcole/FAtools)** - A collection of tools build around making factor analysis easier to conduct and visualize in R.
+-  **[FAtools](https://github.com/mattkcole/FAtools)** - _[in development]_ A collection of tools built around making factor analysis easier to conduct and visualize in R.
 
--  **[lamaR](https://google.com)** - the official lama R app.
+-  **[lamaR](https://github.com/mattkcole/lamaR)** - _[in development]_ the official lama R app.
 
 ## Web
 
--  **[Splash Shot](http://splashshot.xyz)** - Landing page for an up and coming photographer professional network, geared around
+-  **[Splash Shot](http://splashshot.xyz)** - Landing page for an up and coming creative professional network, geared around photographers.
 
--  **[Personal Site](https://mattkcole.com)** - Based off of the [beautiful-jekyll template](https://github.com/daattali/beautiful-jekyll#readme).
+-  **[Personal Site](https://mattkcole.com)** - Based off of the [beautiful-jekyll template](https://github.com/daattali/beautiful-jekyll#readme), but slowly diverging. 
