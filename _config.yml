@@ -3,7 +3,6 @@
 # url is the full website URL
 # baseurl is the website's URL without the hostname
 
-# If you are building a simple GitHub user page (http://username.github.io) then use these settings:
 url: https://mattkcole.com   # with the https protocol
 enforce_ssl: mattkcole.com   # without any protocol
 baseurl: ""
@@ -21,6 +20,7 @@ description: data enthusiast
 navbar-links:
   About Me: "aboutme"
   Contact Me: "contactme"
+  Projects: "projects"
 #  Resources:
 #    - Beautiful Jekyll: "http://deanattali.com/beautiful-jekyll/"
 #    - Learn markdown: "http://www.markdowntutorial.com/"
@@ -87,7 +87,7 @@ url-pretty: "MattKCole.com"  # eg. "deanattali.com/beautiful-jekyll"
 
 # --- Misc --- #
 # Fill in your Disqus shortname (NOT the userid) if you want to support Disqus comments
-#disqus: ""
+disqus: "mattkcole-com"
 
 # Fill in your Google Analytics ID to track your website using GA
 google_analytics: "UA-58198392-1"

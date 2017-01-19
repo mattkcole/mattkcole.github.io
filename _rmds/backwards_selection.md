@@ -1,11 +1,13 @@
-print("--- layout: post title: Pirates arrrr tags: [pirates,
-random] ---")
-
 The problem of covariate selection can be tough, how can we include
-relevant and \_\*\_ variables while excluding those with superfluous
+relevant and otherwise important variables in our models while excluding
+those with unsubstantial or superfluous *happenstantial* relationships?
+Here, we will look at a common mistake - the use of *backward* selection
+in regression analysis.
 
-forward selection
-=================
+Suppose we are interested in assessing the relationship between two
+variables *x* and *y*.
+
+We can assu \# forward selection
 
     library("dplyr")
     library("tidyr")
