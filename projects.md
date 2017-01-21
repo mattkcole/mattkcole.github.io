@@ -19,6 +19,6 @@ subtitle: What I've been doing instead of matching socks
 
 ## Web
 
--  **[Splash Shot](http://splashshot.xyz)** - Landing page for an up and coming creative professional network, geared around photographers.
+-  **[Splash Shot](http://splashshot.xyz)** - Landing page for an up and coming creative professional network, geared around photographers. Built using the Python/Django framework.
 
--  **[Personal Site](https://mattkcole.com)** - Based off of the [beautiful-jekyll template](https://github.com/daattali/beautiful-jekyll#readme), but slowly diverging. 
+-  **[Personal Site](https://mattkcole.com)** - Based off of the [beautiful-jekyll template](https://github.com/daattali/beautiful-jekyll#readme), but slowly diverging.

@@ -2,68 +2,110 @@
 title: "Backwards Selection"
 author: "Matt Cole"
 date: "12/21/2016"
-output: md_document
+output: html_document
 ---
 
+Whenever we consider estimating the relationship between two variables, say $x$ and $y$, we need to consider if what other variables may be associated with both $x$ and $y$ i.e. what variables may be confounding this relationship and should be included as covariates in our (say, linear regression) model?
+The problem of covariate selection can be tough, how can we include relevant and otherwise important variables in our models while excluding those with unsubstantial or superfluous *happenstantial* relationships? Here, we will look at a common mistake - the use of stepwise *backward* selection in regression analysis. 
 
-The problem of covariate selection can be tough, how can we include relevant and otherwise important variables in our models while excluding those with unsubstantial or superfluous *happenstantial* relationships? Here, we will look at a common mistake - the use of *backward* selection in regression analysis. 
+Suppose we have data concerning $y$ and a handful of predictors, $x_i$s. Say we are interested in assessing the relationship between these variables, $x_i$ and $y$, but aren't completely sure of what to expect. Backwards selection is sometimes used in these situations to isolate only the relevant variables by removing all semingly irrelevant ones in a one-at-a-time process. The general protocol is to fit a 'full model' using all available covariates (all $x_i$s), and then remove the $x_i$ with the weakest relationship until some stopping criteria is reached:
 
-Suppose we are interested in assessing the relationship between two variables, $x$ and $y$.
+### Backwards Step-wise selection algorithem (linear regression case)
 
+ 1. Fit a full model using all $N$ $x_i$s
+      - $\hat{y} = \beta_0 + \beta_1 x_1 + ... + \beta_N x_N$
+ 2. Remove $x_i$ with the weakest relationship and refit the model
+     - Usually the least significant variable is dropped
+     - $\hat{y} = \beta_0 + \beta_1 x_1 + \beta_{i-1} x_{i-1} + \beta_{i+1} x_{i+1} + ... + \beta_N x_N$
+ 3. repeat 2 untill a stoping criteria is reaced
+     - could be when all p-values are less than the predefined $\alpha$ value (say, 0.05).
 
+## Backward Selection
 
-
-# forward selection
-
-```{r y_x, cache=TRUE, message=FALSE}
+First, lets set our seed and load some dependensies. 
+```{r loading, cache=TRUE, message=FALSE}
 library("dplyr")
-library("tidyr")
 library("broom")
-set.seed(100)
-x <- vector()
+set.seed(123)
+```
 
-for (i in 1:100){
+First, lets say we are interested in understanding the relationship between $x_1$ and $y$, which under the null hypothesis, $x_1$ and $y$ are independent.
+
+Under the null, what would be expect? 
+
+Well, lets set our significance level ($\alpha$-level) to 0.05. By definition of p-values/$\alpha$-levels we would assume that approximately 5% of our results would come back significant despite there being no actual relationship present. futhermore, becuause there is no _real_ relationship, we would also expect the resulting p-values to be uniform on (0,1).
+
+Let's take a look (I'm using dplyr for better readability):
+
+
+```{r pt1, cache=TRUE}
+x <- vector()
+sim1 <- 100
+# lets run this simulation 10,000 times
+for (i in 1:sim1){
 
         data_set <- data.frame(rnorm(1000), rnorm(1000))
 
         colnames(data_set) <- c("y","x")
 
-        p_val <- lm(y ~ x, data = data_set) %>% #fitting lm
+        # lets fit our linear model
+        p_val <- lm(y ~ x, data = data_set) %>% 
+                
+        # then lets extract our 'tidy' output
+                broom::tidy() %>%               
 
-                broom::tidy() %>%               # getting tidy output
+        # then we will remove the intercept coefficient
+                dplyr::slice(-1) %>%            
 
-                dplyr::slice(-1) %>%            # removed intercept coef
-
-                dplyr::select(p.value) %>%      # selecting pvalues
-
-                as.numeric()                    # storing data in an
-                                                # append friendly way
+        # then we will select select our p-values
+                dplyr::select(p.value) #%>%
 
 
-        x <- append(x, p_val)                   # storing out p-values
+        # storing our generated p-value in a list of p-values
+        x <- append(x, p_val)
 
 }
 
+# storing our list of p-values as a vector for easier plotting etc. 
+x <- as.numeric(x)
 
+# looking at our results
 hist(x,
      col = "steelblue",
      main = "Distribution of p-values",
      # sub = "test",
      xlab = "P-value",
      ylab = "Count")
-
 ```
-we would expect in the first, 5% to be significant in the second, we could expect
+  
+Distribution of p-values in our null, simple linear regression case. Note - the distribution of p-values is what we'd expect, seemingly uniform distribution with $`r sum(x < 0.05)`$ ($`r round(sum(x < 0.05) / length(x), 3)*100`$ %) of our simulated examples reaching sub-$\alpha$ level significance.
 
+Now that, we understand p-values, lets take a look at backward selection using 2 variables. 
+
+### Our Backwards Step-wise selection algorithem
+
+ 1. Fit a full model using $x_1$ & $x_2$
+      - $\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2$
+ 2. If at least $\beta_1$ or $\beta_2$ is non significant, remove $x_i$ with the weakest relationship and refit the model otherwise move to 3
+     - $\hat{y} = \beta_0 + \beta_1 x_1 + \beta_{i-1} x_{i-1} + \beta_{i+1} x_{i+1} + ... + \beta_N x_N$
+ 3. Stop removing covariates when either both $\beta_1$ & $\beta_2$ are significant, or there is only one variable remaining
+
+We would expect, that under the null hypothesis that both $x_1$ and $x_2$ are independent of $y$ and assuming $x_1$ and $x_2$ are independent of themselves, there would be:
+
+* $0.005^2 \times 1000 =`r 1000 * 0.005^2`$ simulated runs where both coefficents are significant
+* $0.05 + 0.05 - 2 \times 0.05^2  * 1000 = `r round((0.05 + 0.05 - 2 * 0.05^2) * 1000,3)`$
 
 ```{r y_x2, cache=TRUE, message=FALSE}
-
-
+ 
 x2 <- vector()
+
 double_sig <- 0
 
-for (i in 1:100){
+# lets simulate this situation 10000 times.
+sim2_num <- 1000
+for (i in 1:sim2_num){
 
+        # creating testing data
         data_set <- data.frame(rnorm(1000),
                 rnorm(1000),
                 rnorm(1000)
@@ -74,15 +116,20 @@ for (i in 1:100){
         #fitting lm
         p_vals <- lm(y ~ x1 + x2, data = data_set) %>%
 
-        # getting tidy output
+        # then obtaining tidy output
                 broom::tidy() %>%  
 
-        # removed intercept coef        
+        # then removing intercept coef        
                 dplyr::slice(-1) %>%            
 
-        # selecting pvalues
+        # then selecting pvalues
                 dplyr::select(term, p.value)
 
+        # checking stopping criteria 
+        # IF both at least one coefficients is not significant
+        # then we remove the coefficient with a higher p-value
+        # and re-run the regression
+        
         if (sum(p_vals$p.val > 0.05) >= 1) {
                 var_keep <- which.min(p_vals$p.val) + 1
                 data_set <- data_set %>%
@@ -95,29 +142,25 @@ for (i in 1:100){
                         as.numeric()
 
                 x2 <- append(x2, p_vals)
+        
+        # otherwise, we will record that both coefficients were significant
         } else {
                 double_sig <- double_sig + 1
         }
-
-
-
 }
 ```
 
-```{r looking_at_x2, cache=F}
-length(x2)
+Out of the `r sim2_num` simulations, `r double_sig` (`r 100*double_sig/sim2_num`%) were found to be significant at both coefficents. These results were right on par with our theoretical estimations made prior to the simulation.
 
+Similarly however, our exted number of simulations where one variable was dropped and the other was significant was _____.
+
+Here lies the stark problem however, if you were to report one of these regression results, and call all coefficients with a p-value below 0.05 as significant, your true alpha-level (your true false positive rate) would actually be much higher. As we saw in this analysis. 
+
+```{r looking_at_x2, cache=F}
 hist(x2,
      col = "steelblue",
      main = "Distribution of p-values",
      xlab = "P-values")
-
-double_sig
 ```
 
-####
-natural progression:
 
-* generalize to 3 + covariates in MLR
-* shiny app
-*
