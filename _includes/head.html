@@ -124,4 +124,8 @@
   <meta name="twitter:image" content="{{ site.url }}{{ site.avatar }}" />
   {% endif %}
 
+  {% if page.use_math %}
+        {% include mathjax_support %}
+  {% endif %}
+
 </head>
