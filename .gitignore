@@ -7,3 +7,7 @@ _drafts
 
 .sass-cache/
 .jekyll-metadata
+
+*.sh
+_rmds/*.html
+_rmds/*.pdf

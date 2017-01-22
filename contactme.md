@@ -1,11 +1,13 @@
 ---
 layout: page
-title: About me
-subtitle: Who is Matt?
+title: Contact Me
+subtitle: Say hi!
 ---
 
 Hi,
 
-Shoot me an [email](mailto:mattcole1093@gmail.com), or contact me using one of the networks below -
+Shoot me an [email](mailto:mattcole1093@gmail.com), or fill out the google form below.
 
-Can't wait!
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScxk7012aaZ6lxWKHMHPr2yitOBfd4jI2vzqhzuP0n61WnMRQ/viewform?embedded=true" width="760" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+
+You can also reach out using one of the networks below :)
