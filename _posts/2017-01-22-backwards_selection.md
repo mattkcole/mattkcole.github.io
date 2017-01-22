@@ -4,7 +4,7 @@ title: 'The Problem With Backward Selection'
 subtitle: How an intuitive method inflates Type 1 error rates and can bias results
 use_math: true
 bigimg: /img/2017-01-22/venice.jpg
-tags: [random, exciting-stuff]
+tags: [R, statistics, backward-selection]
 comments: true
 ---
 Q: What does modeling the number of people buying gelato in Venice using
