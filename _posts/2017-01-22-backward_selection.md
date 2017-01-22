@@ -122,7 +122,7 @@ better readability:
          xlab = "P-value",
          ylab = "Count")
 
-![](backwards_selection_files/figure-markdown_strict/pt1-1.png)
+![](backward_selection_files/figure-markdown_strict/pt1-1.png)
 
 Distribution of p-values in our null, simple linear regression case.
 Note - the distribution of p-values is what we'd expect, seemingly
@@ -243,7 +243,7 @@ the wrong direction.
          main = "Distribution of p-values",
          xlab = "P-values")
 
-![](backwards_selection_files/figure-markdown_strict/looking_at_x2-1.png)
+![](backward_selection_files/figure-markdown_strict/looking_at_x2-1.png)
 
 Distribution of p-values excluding the 26 observations where both
 observations were significant is non-uniform. Clearly we can see very
