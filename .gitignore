@@ -9,5 +9,3 @@ _drafts
 .jekyll-metadata
 
 *.sh
-_rmds/*.html
-_rmds/*.pdf
