@@ -9,10 +9,14 @@ baseurl: ""
 
 
 # Name of website
-title: Matt Cole
+title: Matt Cole's Data Home
 
 # Short description of your site
-description: data enthusiast
+description: Matt's blog dedicated to data science
+
+url: https://mattkcole.com
+
+author: Matt Cole
 
 # making the blog a seperate page (not the index)
 paginate_path: "/blog/page:num/"
@@ -144,6 +148,8 @@ exclude:
   - README.md
   - CNAME
   - Vagrantfile
+  - jekyll-seo-tag
+
 
 # prose.io config
 prose:
@@ -199,5 +205,7 @@ prose:
 
 gems:
   - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-seo-tag
 
 # Tempalte used: Beautiful Jekyll / by: Dean Attali
