@@ -19,7 +19,13 @@ url: https://mattkcole.com
 author: Matt Cole
 
 # making the blog a seperate page (not the index)
-paginate_path: "/blog/page:num/"
+# this was undone on FEB 5 2017
+# the below line was commented out
+# paginate_path: "/blog/page:num/"
+# In addition, the directory folder 'blog' with the sub file, index.html (same as current index.html)
+# was removed
+
+
 
 
 # --- Navigation bar options --- #
@@ -27,7 +33,6 @@ paginate_path: "/blog/page:num/"
 # List of links in the navigation bar
 navbar-links:
   About Me: "aboutme"
-  Blog: "blog"
   Contact Me: "contactme"
   Projects: "projects"
 #  Resources:
