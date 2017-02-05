@@ -1,9 +1,15 @@
 ---
-title: "backward Selection"
-author: "Matt Cole"
-date: "12/21/2016"
-output: md_document
+layout: post
+title: 'The Problem With Backward Selection'
+subtitle: How an intuitive method inflates Type 1 error rates and can bias results
+use_math: true
+bigimg: /img/2017-01-22/venice.jpg
+tags: [R, statistics, backward-selection]
+comments: true
 ---
+# backward Selection
+Matt Cole  
+12/21/2016  
 
 Q: What does modeling the number of people buying gelato in Venice using cultural data and [environmental attributes](http://dati.venezia.it/) have in common with assessing which measures of reading speed are most related to glaucoma propensity?
 
@@ -29,7 +35,8 @@ Suppose we have data concerning $y$ and a handful of predictors, $x_i$'s. Say we
 In order to see and understand why step-wise backward selection may not be an ideal method of covariate selection, we must understand a bit more about p-values. We will accomplish this be examining the distribution of p-values under the null hypothesis where $x$ is independent of $y$.
 
 First, let's set our seed and load some dependencies. 
-```{r loading, cache=F, message=FALSE}
+
+```r
 # R 3.3.2
 library("dplyr")
 library("broom")
@@ -44,7 +51,8 @@ Well, lets set our significance/$\alpha$-level to 0.05. By definition of $\alpha
 
 Let's take a look at 10,000 simulated situations where the linear relationship between $x_1$ and $y$ is compared where both variables are actually independent of one another - I'll using dplyr for better readability:
 
-```{r pt1, cache=TRUE}
+
+```r
 x <- vector()
 sim1 <- 10000
 # lets run this simulation 10,000 times
@@ -66,7 +74,6 @@ for (i in 1:sim1){
         # then we will select select our p-values
                 dplyr::select(p.value) #%>%
 
-
         # storing our generated p-value in a list of p-values
         x <- append(x, p_val)
 
@@ -83,8 +90,10 @@ hist(x,
      xlab = "P-value",
      ylab = "Count")
 ```
+
+![]({{site_url}}/img/blog_images/backwards_selection_files/figure-html/pt1-1.png)<!-- -->
   
-Distribution of p-values in our null, simple linear regression case. Note - the distribution of p-values is what we'd expect, seemingly uniform distribution with $`r sum(x < 0.05)`$ [$`r round(sum(x < 0.05) / length(x), 3)*100`$ %] of our simulated examples reaching sub-$\alpha$ level significance. The take away here is that the percentage of false positives [our realized type I error rate] is very close to our theoretical estimate of 5%, our *A priori* Type I error rate - exactly what we would hope.
+Distribution of p-values in our null, simple linear regression case. Note - the distribution of p-values is what we'd expect, seemingly uniform distribution with $509$ [$5.1$ %] of our simulated examples reaching sub-$\alpha$ level significance. The take away here is that the percentage of false positives [our realized type I error rate] is very close to our theoretical estimate of 5%, our *A priori* Type I error rate - exactly what we would hope.
 
 Now that we understand some of the behavior of p-values, let's take a look at backward selection using 2 variables. 
 
@@ -100,11 +109,11 @@ Now that we understand some of the behavior of p-values, let's take a look at ba
 
 We would expect that, under the null hypothesis: both $x_1$ and $x_2$ are independent of $y$ and $x_1$ and $x_2$ are independent of themselves, there would be:
 
-* $0.005^2 \times 1000 =`r 10000 * 0.005^2`$ simulated runs where both coefficients are significant.
-* $(0.05 + 0.05 - 2 \times 0.05^2)  * 10000 = `r round((0.05 + 0.05 - 2 * 0.05^2) * 10000,3)`$ simulated runs where one coefficient is significant.
+* $0.005^2 \times 1000 =0.25$ simulated runs where both coefficients are significant.
+* $(0.05 + 0.05 - 2 \times 0.05^2)  * 10000 = 950$ simulated runs where one coefficient is significant.
 
-```{r y_x2, cache=TRUE, message=FALSE}
- 
+
+```r
 x2 <- vector()
 
 double_sig <- 0
@@ -158,22 +167,25 @@ for (i in 1:sim2_num){
 }
 ```
 
-Out of the `r sim2_num` simulations, `r double_sig` [`r 100*double_sig/sim2_num`%] were significant at both coefficients. These results were right on par with our theoretical estimations made prior to the simulation.
+Out of the 10^{4} simulations, 26 [0.26%] were significant at both coefficients. These results were right on par with our theoretical estimations made prior to the simulation.
 
-Similarly however, the number of simulations with exactly one coefficient appearing as significant was `r sum(x2 < 0.05)` [`r 100* sum(x2 < 0.05) / sim2_num`%].
+Similarly however, the number of simulations with exactly one coefficient appearing as significant was 943 [9.43%].
 
 Here lies the important problem: 
 
-If you were to conduct this backward selection in the same way *and* report one of these regression results, *and* call all coefficients with a p-value below 0.05 as significant, your true false positive rate would actually be much higher. As we saw in this analysis, despite there being no real relationship between either $x$ or $y$, we recorded that of the `r sim2_num` simulated regressions `r length(x2)` utilized the backward selection algorithm to drop the least significant coefficient. If a researcher/scientist/statistician reported such a regression, their probability of a type 1 error would be about `r 100* (sum(x2 < 0.05)+double_sig) / sim2_num`%, despite being at an $\alpha$ level of 0.05, suggesting false confidence in the results as an improper . This severe Type I error rate inflation could be dangerous, signaling extraneous relationships as real, and leading researchers in the wrong direction. 
+If you were to conduct this backward selection in the same way *and* report one of these regression results, *and* call all coefficients with a p-value below 0.05 as significant, your true false positive rate would actually be much higher. As we saw in this analysis, despite there being no real relationship between either $x$ or $y$, we recorded that of the 10^{4} simulated regressions 9974 utilized the backward selection algorithm to drop the least significant coefficient. If a researcher/scientist/statistician reported such a regression, their probability of a type 1 error would be about 9.69%, despite being at an $\alpha$ level of 0.05, suggesting false confidence in the results as an improper . This severe Type I error rate inflation could be dangerous, signaling extraneous relationships as real, and leading researchers in the wrong direction. 
 
-```{r looking_at_x2, cache=F}
+
+```r
 hist(x2,
      col = "steelblue",
      main = "Distribution of p-values",
      xlab = "P-values")
 ```
 
-Distribution of p-values excluding the `r double_sig` observations where both observations were significant is non-uniform. 
+![]({{site_url}}/img/blog_images/backwards_selection_files/figure-html/looking_at_x2-1.png)<!-- -->
+
+Distribution of p-values excluding the 26 observations where both observations were significant is non-uniform. 
 Clearly we can see very strong skewness towards small p-values despite the absence of any relationship between $x_1$ or $x_2$ and $y$ whatsoever.
 
 
