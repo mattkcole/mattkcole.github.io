@@ -9,3 +9,6 @@ _drafts
 .jekyll-metadata
 
 *.sh
+.Rproj.user
+
+*.Rproj

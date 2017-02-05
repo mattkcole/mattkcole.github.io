@@ -95,13 +95,13 @@ Now that we understand some of the behavior of p-values, let's take a look at ba
  1. Fit a full model using $x_1$ & $x_2$.
       - $\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2$
  2. If at least $\beta_1$ or $\beta_2$ is non significant, remove $x_i$ with the weakest relationship and refit the model otherwise move to 3.
-     - $\hat{y} = \beta_0 + \beta_1 x_1 + \beta_{i-1} x_{i-1} + \beta_{i+1} x_{i+1} + ... + \beta_N x_N$
+     - $\hat{y} = \beta_0 + \beta_i x_i where \beta_i is more significant and \beta_j is not.
  3. Stop removing covariates when either both $\beta_1$ & $\beta_2$ are significant, or there is only one variable remaining.
 
 We would expect that, under the null hypothesis: both $x_1$ and $x_2$ are independent of $y$ and $x_1$ and $x_2$ are independent of themselves, there would be:
 
 * $0.005^2 \times 1000 =`r 10000 * 0.005^2`$ simulated runs where both coefficients are significant.
-* $0.05 + 0.05 - 2 \times 0.05^2  * 10000 = `r round((0.05 + 0.05 - 2 * 0.05^2) * 1000,3)`$ simulated runs where one coefficient is significant.
+* $(0.05 + 0.05 - 2 \times 0.05^2)  * 10000 = `r round((0.05 + 0.05 - 2 * 0.05^2) * 10000,3)`$ simulated runs where one coefficient is significant.
 
 ```{r y_x2, cache=TRUE, message=FALSE}
  
@@ -185,4 +185,4 @@ Model and covariate selection are tricky concepts, partly for the same reason ou
 ### Links
 * Ingo's notes on [Variable Selection](http://www.biostat.jhsph.edu/~iruczins/teaching/jf/ch10.pdf)
 * Problems with the [LASSO](https://arxiv.org/pdf/0808.0967.pdf)
-* This [analyis]()
+* This [analyis](https://github.com/mattkcole/mattkcole.github.io/blob/master/_rmds/backwards_selection.rmd)

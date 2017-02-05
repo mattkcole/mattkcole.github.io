@@ -137,7 +137,7 @@ Backward Selection
 2.  If at least *β*<sub>1</sub> or *β*<sub>2</sub> is non significant,
     remove *x*<sub>*i*</sub> with the weakest relationship and refit the
     model otherwise move to 3.
-    -   $\\hat{y} = \\beta\_0 + \\beta\_1 x\_1 + \\beta\_{i-1} x\_{i-1} + \\beta\_{i+1} x\_{i+1} + ... + \\beta\_N x\_N$
+    -   $ = \_0 + \_i x\_i where \_i is more significant and \_j is not.
 
 3.  Stop removing covariates when either both *β*<sub>1</sub> &
     *β*<sub>2</sub> are significant, or there is only one
@@ -149,7 +149,7 @@ and *x*<sub>2</sub> are independent of *y* and *x*<sub>1</sub> and
 
 -   0.005<sup>2</sup> × 1000 = 0.25 simulated runs where both
     coefficients are significant.
--   0.05 + 0.05 − 2 × 0.05<sup>2</sup> \* 10000 = 95 simulated runs
+-   (0.05 + 0.05 − 2 × 0.05<sup>2</sup>)\*10000 = 950 simulated runs
     where one coefficient is significant.
 
 <!-- -->
@@ -263,4 +263,5 @@ selection by using a p-value correction method.
 -   Ingo's notes on [Variable
     Selection](http://www.biostat.jhsph.edu/~iruczins/teaching/jf/ch10.pdf)
 -   Problems with the [LASSO](https://arxiv.org/pdf/0808.0967.pdf)
--   This [analyis]()
+-   This
+    [analyis](https://github.com/mattkcole/mattkcole.github.io/blob/master/_rmds/backwards_selection.rmd)
