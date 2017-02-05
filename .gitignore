@@ -1,14 +1,24 @@
+# FOLDERS
+
 _site
 _drafts
+_rmds
+
+# JEKYLL
 .sass-cache
 .jekyll-metadata
-
-.DS_Store
-
 .sass-cache/
 .jekyll-metadata
 
-*.sh
-.Rproj.user
+# BASH SCRIPTS
 
+*.sh
+
+# R THINGS and OTHER FILES
+
+.DS_Store
+.Rhistory
+.Rdata
+.Rproj.user
 *.Rproj
+notes.txt
