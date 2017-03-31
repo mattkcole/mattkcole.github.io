@@ -100,6 +100,7 @@ So, in my case, I could not incorporate nFactor's `parallel` function without sp
 
 Each of these would solve my problem while potentially creating new ones or redundant work for myself. But, as of now, I plan on doing all of these in that order. Depending on MASS is not ideal, but for now it certainly gets the job done. Emailing the maintainers of nFactors can't hurt, but I'm not particularly hopeful someone would be willing and able to make changes to their package after 6 years of dormancy (although I would be willing to help). Lastly, something I will also probably do, is just write my own functions for conducting parallel analysis so I wouldn't need nFactors, possibly even using c++ ([rcpp](http://www.rcpp.org/)), which is something I'd like to play around with more.
 
+So, what did I learn? Well, a ton of things about R package building, including the many ways (you should be able) to import functions from other packages, best practices, etc. Mainly however, IF you are building a package which draws functions from 'package A' which depends on 'package B', you _MUST_ *depend* on 'package B' and *import* 'package A' (although you could also depend on package A, but that's bad form) to use any functions from 'Package A' that also incorporates 'package B'.
 
 Moral of the story? I'm not sure, but beware of incorporating non-maintained packages in your projects (sage advice).
 
