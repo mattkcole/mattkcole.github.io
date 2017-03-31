@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 'The Namespace Rabbit Hole'
-subtitle: How I spent way to long getting lost in R's namespace outer space, and made it back alive
+subtitle: How I spent way too long getting lost in R's namespace outer space, and made it back alive
 use_math: false
 bigimg: /img/2017-03-31/hackerman.jpeg
 tags: [R, packages]
