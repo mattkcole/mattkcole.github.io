@@ -14,6 +14,5 @@ I previously studied Math and Biology at [Sacred Heart University](http://www.sa
 
 I'm interested in a bunch of things including tech, sustainability, and bikes.
 
-I don't think I can distill my life to a markdown page so feel free to [reach out](https://mattkcole.com/contactme).
-
-  :)
+I don't think I can distill my life to a markdown page so feel free to
+[reach out](https://mattkcole.com/contactme) or click around.
