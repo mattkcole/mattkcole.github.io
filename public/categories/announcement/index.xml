@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Announcement on Matt Cole&#39;s Site</title>
+    <link>/categories/announcement/index.xml</link>
+    <description>Recent content in Announcement on Matt Cole&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/categories/announcement/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>First post!</title>
+      <link>/2017/01/22/first-post/</link>
+      <pubDate>Sun, 22 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/01/22/first-post/</guid>
+      <description>&lt;p&gt;After a few &lt;a href=&#34;https://wordpress.com/&#34;&gt;Wordpress blogs&lt;/a&gt;, a &lt;a href=&#34;https://www.djangoproject.com/&#34;&gt;Django&lt;/a&gt; experiment and a test of &lt;a href=&#34;http://flask.pocoo.org/&#34;&gt;Flask&lt;/a&gt;, I&amp;rsquo;ve decided to get my feet wet with &lt;a href=&#34;https://jekyllrb.com/&#34;&gt;Jekyll&lt;/a&gt;. Thanks to Dean for the beautiful Jekyll template, &lt;a href=&#34;https://github.com/daattali/beautiful-jekyll&#34;&gt;beautiful-jekyll&lt;/a&gt;, the site is already looking nice. Hope you come along for the ride!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Statistics on Matt Cole&#39;s Site</title>
+    <link>/tags/statistics/index.xml</link>
+    <description>Recent content in Statistics on Matt Cole&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/statistics/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>The Problem With Backward Selection</title>
+      <link>/2017/01/22/the-problem-with-backward-selection/</link>
+      <pubDate>Sun, 22 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/01/22/the-problem-with-backward-selection/</guid>
+      <description>&lt;p&gt;Q: What does modeling the number of people buying gelato in Venice using cultural data and &lt;a href=&#34;http://dati.venezia.it/&#34;&gt;environmental attributes&lt;/a&gt; have in common with assessing which measures of reading speed are most related to glaucoma propensity?&lt;/p&gt;
+&lt;p&gt;A: A strong need for variable selection.&lt;/p&gt;
+&lt;p&gt;Whenever we consider estimating the relationship between two variables, say &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;, we need to contemplate what other factors may be associated with those of interest and whether or not to include them in our model. In addition, sometimes, we may have many variables at our disposal, and need to narrow down which ones provide substantial relevant information in order explain the data in a simple way, avoid overfitting, or reduce costs [in terms of both data collection and, potentially storing/analyzing]. This problem of covariate selection can be tough - how can we include relevant and otherwise important variables in our models while excluding those with unsubstantial or happenstantial relationships? Here, we will look at a common mistake - the use of step-wise-backward selection in regression analysis.&lt;/p&gt;
+&lt;p&gt;Suppose we have data concerning &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; and a handful of predictors, &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;’s. Say we are interested in assessing the relationship between these variables, &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;, but aren’t sure which variables to include. Backward selection is sometimes employed to isolate only the relevant variables by removing seemingly irrelevant covariates in a one-at-a-time process. The general protocol is to fit a ‘full model’ using all available covariates (all &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;’s), and then remove the &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt; with the weakest relationship one at a time until some stopping criteria is reached:&lt;/p&gt;
+&lt;div id=&#34;backward-step-wise-selectionelimination-algorithm-linear-regression-case&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Backward Step-wise selection/elimination algorithm [linear regression case]&lt;/h3&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Fit a full model using all &lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt; &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;’s
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\hat{y} = \beta_0 + \beta_1 x_1 + ... + \beta_N x_N\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Remove &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt; with the weakest relationship and refit the model.
+&lt;ul&gt;
+&lt;li&gt;Usually the least significant variable, if one exists, is dropped, and the model refit.&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\hat{y} = \beta_0 + \beta_1 x_1 + \beta_{i-1} x_{i-1} + \beta_{i+1} x_{i+1} + ... + \beta_N x_N\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Repeat 2 until a stopping criteria is reached.
+&lt;ul&gt;
+&lt;li&gt;Could be when all remaining coefficient p-values are less than the predefined &lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt; value [say, 0.05], or there is only one coefficient remaining.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div id=&#34;p-values-and-their-properties&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;P-values and their properties&lt;/h2&gt;
+&lt;p&gt;In order to see and understand why step-wise backward selection may not be an ideal method of covariate selection, we must understand a bit more about p-values. We will accomplish this be examining the distribution of p-values under the null hypothesis where &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; is independent of &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;First, let’s set our seed and load some dependencies.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# R 3.3.2
+library(&amp;quot;dplyr&amp;quot;)
+library(&amp;quot;broom&amp;quot;)
+set.seed(123)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s say we are interested in understanding the relationship between &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;, which under the null hypothesis, &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; are independent.&lt;/p&gt;
+&lt;p&gt;Under the null, what would be expect?&lt;/p&gt;
+&lt;p&gt;Well, lets set our significance/&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;-level to 0.05. By definition of &lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;-level we know that approximately 5% of our results would be significant despite there being no actual relationship present. Furthermore, because there is no &lt;em&gt;real&lt;/em&gt; relationship, we would also expect the resulting p-values to be uniform on (0,1).&lt;/p&gt;
+&lt;p&gt;Let’s take a look at 1,000 simulated situations where the linear relationship between &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; is compared where both variables are actually independent of one another - I’ll using dplyr for better readability:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- vector()
+sim1 &amp;lt;- 1000
+# lets run this simulation 10,000 times
+for (i in 1:sim1){
+
+        data_set &amp;lt;- data.frame(rnorm(1000), rnorm(1000))
+
+        colnames(data_set) &amp;lt;- c(&amp;quot;y&amp;quot;,&amp;quot;x&amp;quot;)
+
+        # lets fit our linear model
+        p_val &amp;lt;- lm(y ~ x, data = data_set) %&amp;gt;%
+
+        # then lets extract our &amp;#39;tidy&amp;#39; output
+                broom::tidy() %&amp;gt;%               
+
+        # then we will remove the intercept coefficient
+                dplyr::slice(-1) %&amp;gt;%            
+
+        # then we will select select our p-values
+                dplyr::select(p.value) #%&amp;gt;%
+
+        # storing our generated p-value in a list of p-values
+        x &amp;lt;- append(x, p_val)
+
+}
+
+# storing our list of p-values as a vector for easier plotting etc.
+x &amp;lt;- as.numeric(x)
+
+# looking at our results
+hist(x,
+     col = &amp;quot;steelblue&amp;quot;,
+     main = &amp;quot;Distribution of p-values&amp;quot;,
+     # sub = &amp;quot;test&amp;quot;,
+     xlab = &amp;quot;P-value&amp;quot;,
+     ylab = &amp;quot;Count&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-01-22-backwards_selection_files/figure-html/pt1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Distribution of p-values in our null, simple linear regression case. Note - the distribution of p-values is what we’d expect, seemingly uniform distribution with &lt;span class=&#34;math inline&#34;&gt;\(49\)&lt;/span&gt; [&lt;span class=&#34;math inline&#34;&gt;\(4.9\)&lt;/span&gt; %] of our simulated examples reaching sub-&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt; level significance. The take away here is that the percentage of false positives [our realized type I error rate] is very close to our theoretical estimate of 5%, our &lt;em&gt;A priori&lt;/em&gt; Type I error rate - exactly what we would hope.&lt;/p&gt;
+&lt;p&gt;Now that we understand some of the behavior of p-values, let’s take a look at backward selection using 2 variables.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;backward-selection&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Backward Selection&lt;/h2&gt;
+&lt;div id=&#34;our-backward-step-wise-selectionelimination-algorithm&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;em&gt;Our&lt;/em&gt; Backward Step-wise selection/elimination algorithm&lt;/h3&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Fit a full model using &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; &amp;amp; &lt;span class=&#34;math inline&#34;&gt;\(x_2\)&lt;/span&gt;.
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;If at least &lt;span class=&#34;math inline&#34;&gt;\(\beta_1\)&lt;/span&gt; or &lt;span class=&#34;math inline&#34;&gt;\(\beta_2\)&lt;/span&gt; is non significant, remove &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt; with the weakest relationship and refit the model otherwise move to 3.
+&lt;ul&gt;
+&lt;li&gt;$ = _0 + _i x_i where _i is more significant and _j is not.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Stop removing covariates when either both &lt;span class=&#34;math inline&#34;&gt;\(\beta_1\)&lt;/span&gt; &amp;amp; &lt;span class=&#34;math inline&#34;&gt;\(\beta_2\)&lt;/span&gt; are significant, or there is only one variable remaining.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We would expect that, under the null hypothesis: both &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(x_2\)&lt;/span&gt; are independent of &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(x_2\)&lt;/span&gt; are independent of themselves, there would be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(0.005^2 \times 1000 =0.025\)&lt;/span&gt; simulated runs where both coefficients are significant.&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\((0.05 + 0.05 - 2 \times 0.05^2) * 10000 = 95\)&lt;/span&gt; simulated runs where one coefficient is significant.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x2 &amp;lt;- vector()
+
+double_sig &amp;lt;- 0
+
+# lets simulate this situation 10000 times.
+sim2_num &amp;lt;- 1000
+for (i in 1:sim2_num){
+
+        # creating testing data
+        data_set &amp;lt;- data.frame(rnorm(1000),
+                rnorm(1000),
+                rnorm(1000)
+                )
+
+        colnames(data_set) &amp;lt;- c(&amp;quot;y&amp;quot;, &amp;quot;x1&amp;quot;, &amp;quot;x2&amp;quot;)
+
+        #fitting lm
+        p_vals &amp;lt;- lm(y ~ x1 + x2, data = data_set) %&amp;gt;%
+
+        # then obtaining tidy output
+                broom::tidy() %&amp;gt;%  
+
+        # then removing intercept coef        
+                dplyr::slice(-1) %&amp;gt;%            
+
+        # then selecting pvalues
+                dplyr::select(term, p.value)
+
+        # checking stopping criteria
+        # IF both at least one coefficients is not significant
+        # then we remove the coefficient with a higher p-value
+        # and re-run the regression
+
+        if (sum(p_vals$p.value &amp;gt; 0.05) &amp;gt;= 1) {
+                var_keep &amp;lt;- which.min(p_vals$p.value) + 1
+                data_set &amp;lt;- data_set %&amp;gt;%
+                        dplyr::select(c(1,var_keep))
+
+                p_vals &amp;lt;- lm(y ~ ., data = data_set) %&amp;gt;%
+                        broom::tidy() %&amp;gt;%
+                        dplyr::slice(-1) %&amp;gt;%
+                        dplyr::select(p.value) %&amp;gt;%
+                        as.numeric()
+
+                x2 &amp;lt;- append(x2, p_vals)
+
+        # otherwise, we will record that both coefficients were significant
+        } else {
+                double_sig &amp;lt;- double_sig + 1
+        }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Out of the 1000 simulations, 2 [0.2%] were significant at both coefficients. These results were right on par with our theoretical estimations made prior to the simulation.&lt;/p&gt;
+&lt;p&gt;Similarly however, the number of simulations with exactly one coefficient appearing as significant was 115 [11.5%].&lt;/p&gt;
+&lt;p&gt;Here lies the important problem:&lt;/p&gt;
+&lt;p&gt;If you were to conduct this backward selection in the same way &lt;em&gt;and&lt;/em&gt; report one of these regression results, &lt;em&gt;and&lt;/em&gt; call all coefficients with a p-value below 0.05 as significant, your true false positive rate would actually be much higher. As we saw in this analysis, despite there being no real relationship between either &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; or &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;, we recorded that of the 1000 simulated regressions 998 utilized the backward selection algorithm to drop the least significant coefficient. If a researcher/scientist/statistician reported such a regression, their probability of a type 1 error would be about 11.7%, despite being at an &lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt; level of 0.05, suggesting false confidence in the results as an improper . This severe Type I error rate inflation could be dangerous, signaling extraneous relationships as real, and leading researchers in the wrong direction.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hist(x2,
+     col = &amp;quot;steelblue&amp;quot;,
+     main = &amp;quot;Distribution of p-values&amp;quot;,
+     xlab = &amp;quot;P-values&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-01-22-backwards_selection_files/figure-html/looking_at_x2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Distribution of p-values excluding the 2 observations where both observations were significant is non-uniform. Clearly we can see very strong skewness towards small p-values despite the absence of any relationship between &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; or &lt;span class=&#34;math inline&#34;&gt;\(x_2\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; whatsoever.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;other-options-and-takeaways&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Other Options and Takeaways&lt;/h2&gt;
+&lt;p&gt;As we saw here, even a small alteration to our methodologies can have striking effects on our type I error rates, and in turn our results and interpretations. It is important when doing any sort of selection method to consider how this type I error rate [which is really one of the most important concepts of hypothesis testing] may be changing, and report it. Model and covariate selection are tricky concepts, partly for the same reason outlined above. Even some ‘robust’ methodologies such as the &lt;a href=&#34;https://arxiv.org/pdf/0808.0967.pdf&#34;&gt;LASSO&lt;/a&gt; can be tainted with bias [although in a bit different form]. The best defense to these issues can be to understand what biases &lt;em&gt;may&lt;/em&gt; be occurring and accounting for them. For instance, it still may be possible to utilize backward selection by using a p-value correction method.&lt;/p&gt;
+&lt;div id=&#34;links&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Links&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Ingo’s notes on &lt;a href=&#34;http://www.biostat.jhsph.edu/~iruczins/teaching/jf/ch10.pdf&#34;&gt;Variable Selection&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Problems with the &lt;a href=&#34;https://arxiv.org/pdf/0808.0967.pdf&#34;&gt;LASSO&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;This &lt;a href=&#34;https://github.com/mattkcole/mattkcole.github.io/blob/master/_rmds/backwards_selection.rmd&#34;&gt;analyis&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

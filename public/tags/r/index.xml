@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on Matt Cole&#39;s Site</title>
+    <link>/tags/r/index.xml</link>
+    <description>Recent content in R on Matt Cole&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Pipes in R</title>
+      <link>/2017/07/02/pipes-in-r/</link>
+      <pubDate>Sun, 02 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/07/02/pipes-in-r/</guid>
+      <description>&lt;p&gt;Data scientists and the Mario Brothers agree - pipes rock.&lt;/p&gt;
+&lt;p&gt;If you have been using R for data ‘plumbing’/wrangling etc. you have undoubtedly came across the fantastic &lt;a href=&#34;https://github.com/tidyverse/dplyr&#34;&gt;dplyr&lt;/a&gt; package and then by default, the the standard pipe.&lt;/p&gt;
+&lt;p&gt;The pipes we will be discussing today are from the &lt;a href=&#34;https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html&#34;&gt;magrittr pacakge&lt;/a&gt;, which is where dplyr’s ‘standard’ pipe comes from (repo is &lt;a href=&#34;https://github.com/tidyverse/magrittr&#34;&gt;here&lt;/a&gt;). Straight from the highly recommended magrittr &lt;a href=&#34;https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html&#34;&gt;vignette&lt;/a&gt;, the purpose of pipes and the magrittr package itself is to “decrease development time and to improve readability and maintainability of code” - who wouldn’t like that?&lt;/p&gt;
+&lt;p&gt;As mentioned above, pipes are a fantastic way to improve readability in your code, an attribute that has been written about &lt;a href=&#34;https://www.r-statistics.com/2014/08/simpler-r-coding-with-pipes-the-present-and-future-of-the-magrittr-package/&#34;&gt;many&lt;/a&gt; &lt;a href=&#34;http://www.econometricsbysimulation.com/2014/07/more-readable-code-with-pipes-in-r.html&#34;&gt;times&lt;/a&gt;. This readability quickly translates into more efficient code by writing less, and understanding more.&lt;/p&gt;
+&lt;p&gt;Let’s take a tour:&lt;/p&gt;
+&lt;p&gt;First of all, pipes are &lt;a href=&#34;https://mattkcole.com/2017-02-22-intro-to-infix-functions/&#34;&gt;infix functions&lt;/a&gt;, which call their arguments on either side, instead of the more common prefix functions which take arguments after the function is called.&lt;/p&gt;
+&lt;p&gt;Now, onto the magrittr pipes!&lt;/p&gt;
+&lt;div id=&#34;standard-pipe&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Standard pipe: &lt;code&gt;%&amp;gt;%&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;So, here we will do a short run through of the basic piping operator (%&amp;gt;%) for those new to the concept, and discuss some of other pipes that could be useful to experienced useRs. These pipes have a history of being introduced alongside the dplyr package, which together makes for some incredibly powerful, yet concise code (so powerful, during a technical job interview I was asked to stop using dplyr/pipes…).&lt;/p&gt;
+&lt;p&gt;The standard pipe takes the object to its left, and passes it as the &lt;em&gt;first&lt;/em&gt; argument in the function to the right. When reading code, we can then read the pipe operator simply as: ‘then’.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(datasets)
+library(dplyr)
+library(magrittr)
+trees %&amp;gt;%
+        dplyr::filter(Girth &amp;gt; 9) %&amp;gt;%
+        dplyr::select(Height, Volume) %&amp;gt;%
+        summary()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##      Height          Volume     
+##  Min.   :64.00   Min.   :15.60  
+##  1st Qu.:74.00   1st Qu.:20.73  
+##  Median :77.50   Median :25.30  
+##  Mean   :77.07   Mean   :32.30  
+##  3rd Qu.:80.25   3rd Qu.:39.38  
+##  Max.   :87.00   Max.   :77.00&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This can be read as “Take the trees data set, then show only the trees with girth greater than 9, then select the height and volume of those trees, then compute summary statistics on those two variables”.&lt;/p&gt;
+&lt;p&gt;Without pipes we’d use:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# complete base R way:
+summary(trees[trees$Girth &amp;gt; 9, 2:3])&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##      Height          Volume     
+##  Min.   :64.00   Min.   :15.60  
+##  1st Qu.:74.00   1st Qu.:20.73  
+##  Median :77.50   Median :25.30  
+##  Mean   :77.07   Mean   :32.30  
+##  3rd Qu.:80.25   3rd Qu.:39.38  
+##  Max.   :87.00   Max.   :77.00&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# or
+
+# using dplyr
+trees_of_interest &amp;lt;- dplyr::filter(trees, Girth &amp;gt; 9)
+vars_of_interest &amp;lt;- dplyr::select(trees_of_interest, Height, Volume)
+summary(vars_of_interest)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##      Height          Volume     
+##  Min.   :64.00   Min.   :15.60  
+##  1st Qu.:74.00   1st Qu.:20.73  
+##  Median :77.50   Median :25.30  
+##  Mean   :77.07   Mean   :32.30  
+##  3rd Qu.:80.25   3rd Qu.:39.38  
+##  Max.   :87.00   Max.   :77.00&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Very quickly we can identify the benefits here, readability. With &lt;code&gt;%&amp;gt;%&lt;/code&gt; we can read the data munging process from left to right, just like English. Compare this with the ‘base R’ approach in the second chunk - have to read as a mix of left to right with functions being called on parsed objects - quite a mess. Even using dplyr is not enough to make this process readable, we’ve just created two additional data frames just to compute these summary statistics (which, not to mention, could be computationally intense in bigger datasets).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tree-pipe-t&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Tree pipe: &lt;code&gt;%T&amp;gt;%&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;The tree pipe is very similar to the standard pipe, however, it returns the &lt;em&gt;left&lt;/em&gt; input instead of the operated value. Check out the difference below:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;1:10 %&amp;gt;%
+        mean()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 5.5&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;1:10 %T&amp;gt;%
+        mean()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1]  1  2  3  4  5  6  7  8  9 10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You might be wondering why this is useful, which is fair. This operator works very well plotting data mid ‘pipeline’ as well as in some other, more niche areas.&lt;/p&gt;
+&lt;p&gt;For example, say we are wrangling data, want to plot it, but also would like to visualize it:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(datasets)
+mtcars %&amp;gt;%
+        dplyr::group_by(cyl) %&amp;gt;%
+        dplyr::summarise(mean_hp = mean(hp)) %T&amp;gt;%
+        plot(main = &amp;quot;Horsepower by cylinders - mtcars edition&amp;quot;,
+             xlab = &amp;quot;cylinders&amp;quot;, ylab = &amp;quot;horse power&amp;quot;,
+             type = &amp;quot;l&amp;quot;, lwd = 3, col = &amp;quot;steelblue&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-07-02-Pipes-in-R_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 2
+##     cyl   mean_hp
+##   &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;
+## 1     4  82.63636
+## 2     6 122.28571
+## 3     8 209.21429&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here we were able to return a nice plot as well as a data matrix without rewriting / copy &amp;amp; pasting code.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exposition-pipe&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Exposition pipe: &lt;code&gt;%$%&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Admittedly, this is not a pipe operator I have used often (read: at all), but it is featured in the package. Essentially &lt;code&gt;%$%&lt;/code&gt; is a ‘pipe friendly’ way to pull objects from a data frame, similarly to the base R method of using &lt;code&gt;$&lt;/code&gt; to extract a single element (column) from an object (data frame, typically).&lt;/p&gt;
+&lt;p&gt;Thus, writing this code to plot a box plot from the horsepower (hp) vector of the mtcars data could be written like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;boxplot(mtcars$hp)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-07-02-Pipes-in-R_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;or, using the exposition pipe, like the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %$%
+  boxplot(hp)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-07-02-Pipes-in-R_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Without knowing the exposition pipe I may have written the same code as:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%
+        dplyr::select(hp) %&amp;gt;%
+        boxplot()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-07-02-Pipes-in-R_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;This results in the exact same output as the previous two chunks, but is one line longer than the exposition example - I will be sure to include it in my toolbox!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;compound-assignment-pipe&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;compound assignment pipe: &lt;code&gt;%&amp;lt;&amp;gt;%&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Here it is important to note that there are many different philosophies regarding nearly all aspects of data management, particularly when it comes to overwriting your data. While there are certain circumstances where overwriting may be ok, it is always important to be careful! The compound assignment pipe rewrites the left hand object with the output of the function to the right.&lt;/p&gt;
+&lt;p&gt;In practice:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(100)
+
+x &amp;lt;- rnorm(100)
+x %&amp;lt;&amp;gt;% round() %&amp;gt;% median()
+x&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What happened here? We defined x as a string of 100 random standard normals, then reassigned x as the median rounded value. This could save a little bit of typing as I typically see the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(100)
+
+x &amp;lt;- rnorm(100)
+x &amp;lt;- x %&amp;gt;% round() %&amp;gt;% median()
+x&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;in-short&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;In short:&lt;/h3&gt;
+&lt;p&gt;Pipes are not absolutely required for any particular analysis, but can drastically improve readability and reduce the number of lines needed (two sometimes competing birds with one stone here!). Once you have mastered the standard pipe (&lt;code&gt;%&amp;gt;%&lt;/code&gt;) you should spend some time exploring and utilizing the others, as they function well in different yet common situations. I for one am going to spend some more time with the exposition pipe which can help shave a line of code when selecting a single column from a data frame.&lt;/p&gt;
+&lt;p&gt;Let me know if you have any questions or comments!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The Namespace Rabbit Hole</title>
+      <link>/2017/03/30/the-namespace-rabbit-hole/</link>
+      <pubDate>Thu, 30 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/03/30/the-namespace-rabbit-hole/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been working on an &lt;a href=&#34;https://github.com/mattkcole/FAtools&#34;&gt;R package&lt;/a&gt; for factor analysis visualization for a while now, and ran into an interesting problem. One function in &lt;a href=&#34;https://github.com/mattkcole/FAtools&#34;&gt;FAtools&lt;/a&gt; is essentially a wrapper for several functions in the nFactors package, which plots and displays both graphical and non graphical &lt;a href=&#34;http://econtent.hogrefe.com/doi/abs/10.1027/1614-2241/a000051?journalCode=med&#34;&gt;scree test&lt;/a&gt; solutions. It&amp;rsquo;s a handy way for people to look &lt;em&gt;a little&lt;/em&gt; more closely at the number of factors to extract (although, I would argue not enough).&lt;/p&gt;
+
+&lt;p&gt;My &lt;code&gt;scree_plot&lt;/code&gt; function requires two functions from the nFactors package: &lt;code&gt;parallel&lt;/code&gt; and &lt;code&gt;nScree&lt;/code&gt;. So, using &lt;a href=&#34;https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html&#34;&gt;roxygen2&lt;/a&gt;, I added the following to my DESCRIPTION file, telling R that the nFactors package would be utilized in FAtools:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Imports:
+    nFactors
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and the following roxygen2 code above my &lt;code&gt;scree_plot&lt;/code&gt; function to tell R that in this function we would be utilizing &lt;code&gt;parallel&lt;/code&gt; and &lt;code&gt;nScree&lt;/code&gt; from nFactors:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#&#39; @importFrom nFactors parallel nScree
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I thought to myself - I&amp;rsquo;m all set, I can&amp;rsquo;t wait to share this function! But in a few seconds my package dreams were shattered. While building, I received the following error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Error: could not find function &amp;quot;mvrnorm&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s weird. &lt;code&gt;mvrnorm&lt;/code&gt; is a function from the &lt;code&gt;MASS&lt;/code&gt; package which is called by &lt;code&gt;parallel&lt;/code&gt;. &lt;code&gt;mvrnorm&lt;/code&gt; allows us to simulate random draws from a multivariate normal distribution which &lt;code&gt;parallel&lt;/code&gt; requires in order to conduct parallel analysis. Clearly, R was able to see &lt;code&gt;parallel&lt;/code&gt;, which was from the nFactors package, but was not able to find a package it relied on - very strange.&lt;/p&gt;
+
+&lt;p&gt;After some head scratching, I thought of an easy fix - explicitly import &lt;code&gt;mvrnorm&lt;/code&gt;. The following changes were made:&lt;/p&gt;
+
+&lt;p&gt;DESCRIPTION:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Imports:
+    MASS,
+    nFactors
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;top of scree_plot.R&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#&#39; @importFrom MASS mvrnorm
+#&#39; @importFrom nFactors parallel nScree
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Building.&lt;/p&gt;
+
+&lt;p&gt;Building..&lt;/p&gt;
+
+&lt;p&gt;Building&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;Boom, same problem again: &lt;code&gt;Error: could not find function &amp;quot;mvrnorm&amp;quot;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I explicitly called &lt;code&gt;mvrnorm&lt;/code&gt; into the namespace yet R couldn&amp;rsquo;t find it? That doesn&amp;rsquo;t seem right at all. I was getting worried when the hackerman inside came out. I added the following line &lt;em&gt;inside&lt;/em&gt; my &lt;code&gt;scree_plot&lt;/code&gt; function with the hope that by defining &lt;code&gt;mvrnorm&lt;/code&gt; within &lt;code&gt;scree_plot&lt;/code&gt;, something would catch.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#&#39; ...
+#&#39; @importFrom MASS mvrnorm
+#&#39; @importFrom nFactors parallel nScree
+#&#39; ...
+scree_plot &amp;lt;- function(...){
+        mvrnorm &amp;lt;- MASS::mvrnorm
+        ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;then:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Error: could not find function &amp;quot;mvrnorm&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;Again, disappointment - but also confusion. Phrases like &amp;lsquo;lexical scoping&amp;rsquo; and &amp;lsquo;exporting namespace&amp;rsquo; were swirling around my head as I was trying to figure out what was happening. One last idea I had was to literally call &lt;code&gt;library(MASS)&lt;/code&gt; &lt;em&gt;inside&lt;/em&gt; my function like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;scree_plot &amp;lt;- function(...){
+        library(MASS)
+        ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To be honest, I didn&amp;rsquo;t expect this would work, but alas it allowed &lt;code&gt;scree_plot&lt;/code&gt; to function as intended. Now there are several reasons why this is a terrible idea. Most importantly, in my own work, I use dplyr&amp;rsquo;s &lt;code&gt;select&lt;/code&gt; function, which would now be masked by &lt;code&gt;MASS::select&lt;/code&gt;, other people could have even more conflicts because of the now bloated namespace (MASS is not a small package).&lt;/p&gt;
+
+&lt;p&gt;It was around this time I tracked down my friend and R package guru &lt;a href=&#34;http://seankross.com/&#34;&gt;Sean&lt;/a&gt; to help me see what was going on. After some digging around, it was discovered that, prior to R Version 2.14.0 (released in 2011), the only way for a package function to incorporate functions from other packages was by &amp;lsquo;depending&amp;rsquo; on them*. Today, the &lt;code&gt;Depends&lt;/code&gt; field is typically reserved for R version numbers ie. &lt;code&gt;Depends: R (&amp;gt;= 3.1.0)&lt;/code&gt;, which would restrict package use to R version numbers greater than or equal to 3.1.0. Although usually frowned upon, this field can also specify packages (and versions) that are to be essentially loaded concurrently. As Sean discovered, package functions which incorporate another package&amp;rsquo;s function via &lt;em&gt;Depends&lt;/em&gt; cannot be incorporated in your packages, or my packages, or anyone else&amp;rsquo;s package without depending on the same package. Because the last update to the nFactors package was also in 2011, we knew the source of our errors, nFactors depends on MASS.&lt;/p&gt;
+
+&lt;p&gt;So, in my case, I could not incorporate nFactor&amp;rsquo;s &lt;code&gt;parallel&lt;/code&gt; function without specifying: &lt;code&gt;Depends: MASS&lt;/code&gt;. This is not ideal for some of the same reasons calling &lt;code&gt;library(MASS)&lt;/code&gt; inside of a function is not a good idea. But at the end of the day I have only a few options:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Use &lt;code&gt;Depends: MASS&lt;/code&gt; and require all users to have and &amp;lsquo;load&amp;rsquo; MASS when loading FAtools&lt;/li&gt;
+&lt;li&gt;Get the maintainers of nFactors to update their code (that has been neglected for six years)&lt;/li&gt;
+&lt;li&gt;Build my own versions of relevant nFactor functions like &lt;code&gt;parallel&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Each of these would solve my problem while potentially creating new ones or redundant work for myself. But, as of now, I plan on doing all of these in that order. Depending on MASS is not ideal, but for now it certainly gets the job done. Emailing the maintainers of nFactors can&amp;rsquo;t hurt, but I&amp;rsquo;m not particularly hopeful someone would be willing and able to make changes to their package after 6 years of dormancy (although I would be willing to help). Lastly, something I will also probably do, is just write my own functions for conducting parallel analysis so I wouldn&amp;rsquo;t need nFactors, possibly even using c++ (&lt;a href=&#34;http://www.rcpp.org/&#34;&gt;rcpp&lt;/a&gt;), which is something I&amp;rsquo;d like to play around with more.&lt;/p&gt;
+
+&lt;p&gt;So, what did I learn? Well, a ton of things about R package building, including the many ways (you should be able) to import functions from other packages, best practices, etc. Mainly however, IF you are building a package which draws functions from &amp;lsquo;package A&amp;rsquo; which depends on &amp;lsquo;package B&amp;rsquo;, you &lt;em&gt;MUST&lt;/em&gt; &lt;em&gt;depend&lt;/em&gt; on &amp;lsquo;package B&amp;rsquo; and &lt;em&gt;import&lt;/em&gt; &amp;lsquo;package A&amp;rsquo; (although you could also depend on package A, but that&amp;rsquo;s bad form) to use any functions from &amp;lsquo;Package A&amp;rsquo; that also incorporates &amp;lsquo;package B&amp;rsquo;.&lt;/p&gt;
+
+&lt;p&gt;Moral of the story? I&amp;rsquo;m not sure, but beware of incorporating non-maintained packages in your projects (sage advice).&lt;/p&gt;
+
+&lt;p&gt;Relevant links:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Old package dependency mechanism &lt;a href=&#34;http://r-pkgs.had.co.nz/description.html&#34;&gt;source&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;R &lt;a href=&#34;http://r-pkgs.had.co.nz/namespace.html&#34;&gt;namespaces&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=fQGbXmkSArs&amp;amp;ab_channel=mrfyote&#34;&gt;Hackerman&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Looking Both Ways - Infix Functions</title>
+      <link>/2017/02/05/looking-both-ways---infix-functions/</link>
+      <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/02/05/looking-both-ways---infix-functions/</guid>
+      <description>&lt;p&gt;In your R journeys you may have come across some interesting functions like &lt;code&gt;apply&lt;/code&gt; statements or even &lt;code&gt;lm&lt;/code&gt;. One function that is particularly helpful (and interesting) is the piping operator (&lt;code&gt;%&amp;gt;%&lt;/code&gt;) from the &lt;a href=&#34;https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html&#34;&gt;magrittr pacakge&lt;/a&gt;. You may have noticed that the piping operator is similar to the matrix multiplcation operator &lt;code&gt;%*%&lt;/code&gt;, in that they are both &lt;em&gt;sandwitch&lt;/em&gt; functions (may or may not be trying to coin this term right now), as the function call is/are a symbol(s) enclosed by a &lt;code&gt;%&lt;/code&gt; on both times. These sandwitch functions in R are actually members of a larger class of functions, known as &lt;em&gt;infix&lt;/em&gt; &lt;a href=&#34;https://en.wikipedia.org/wiki/Infix_notation&#34;&gt;functions&lt;/a&gt;. Unlike most functions such as &lt;code&gt;mean()&lt;/code&gt;, &lt;code&gt;summary()&lt;/code&gt;, or &lt;code&gt;kable()&lt;/code&gt;, are &lt;em&gt;prefix&lt;/em&gt; functions, which take their arguments after the fucntion is called (&lt;code&gt;mean(c(1.2,1.6,0.4,3.1)&lt;/code&gt;). Infix fuctions on the other hand, come inbetween its (two) arguments. Other infix functions include basic addition, and subtraction (&lt;code&gt;+&lt;/code&gt;, &lt;code&gt;-&lt;/code&gt;) and all your other common aresthmatic functions. Many in R however, are functions enclosed by a % on both side to indicate their special features. Some other examples are &lt;code&gt;%*%&lt;/code&gt; (matrix multiplication), or &lt;code&gt;%in%&lt;/code&gt;, &lt;a href=&#34;http://adv-r.had.co.nz/Functions.html&#34;&gt;etc&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;matrix(c(1:4),2) %*% matrix(c(1,0,0,1),2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##      [,1] [,2]
+## [1,]    1    3
+## [2,]    2    4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can even define our own infix functions as follows:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;`%+2%` &amp;lt;- function(x, y){
+return(x + y + 2)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So, what would &lt;code&gt;1 %+2% 1&lt;/code&gt; result in?&lt;/p&gt;
+&lt;p&gt;In short, while these functions are, deep down, just regular functions. They can improve readability considerably in your code - imagine needing to use &lt;code&gt;add(x,y)&lt;/code&gt; whenever you had to find the sum of two numbers.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;(2+2) * 10 - 6&lt;/code&gt; would turn into &lt;code&gt;subtract(multiply(add(2,2),10),6)&lt;/code&gt;. What a monster!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The Problem With Backward Selection</title>
+      <link>/2017/01/22/the-problem-with-backward-selection/</link>
+      <pubDate>Sun, 22 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/01/22/the-problem-with-backward-selection/</guid>
+      <description>&lt;p&gt;Q: What does modeling the number of people buying gelato in Venice using cultural data and &lt;a href=&#34;http://dati.venezia.it/&#34;&gt;environmental attributes&lt;/a&gt; have in common with assessing which measures of reading speed are most related to glaucoma propensity?&lt;/p&gt;
+&lt;p&gt;A: A strong need for variable selection.&lt;/p&gt;
+&lt;p&gt;Whenever we consider estimating the relationship between two variables, say &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;, we need to contemplate what other factors may be associated with those of interest and whether or not to include them in our model. In addition, sometimes, we may have many variables at our disposal, and need to narrow down which ones provide substantial relevant information in order explain the data in a simple way, avoid overfitting, or reduce costs [in terms of both data collection and, potentially storing/analyzing]. This problem of covariate selection can be tough - how can we include relevant and otherwise important variables in our models while excluding those with unsubstantial or happenstantial relationships? Here, we will look at a common mistake - the use of step-wise-backward selection in regression analysis.&lt;/p&gt;
+&lt;p&gt;Suppose we have data concerning &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; and a handful of predictors, &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;’s. Say we are interested in assessing the relationship between these variables, &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;, but aren’t sure which variables to include. Backward selection is sometimes employed to isolate only the relevant variables by removing seemingly irrelevant covariates in a one-at-a-time process. The general protocol is to fit a ‘full model’ using all available covariates (all &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;’s), and then remove the &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt; with the weakest relationship one at a time until some stopping criteria is reached:&lt;/p&gt;
+&lt;div id=&#34;backward-step-wise-selectionelimination-algorithm-linear-regression-case&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Backward Step-wise selection/elimination algorithm [linear regression case]&lt;/h3&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Fit a full model using all &lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt; &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;’s
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\hat{y} = \beta_0 + \beta_1 x_1 + ... + \beta_N x_N\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Remove &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt; with the weakest relationship and refit the model.
+&lt;ul&gt;
+&lt;li&gt;Usually the least significant variable, if one exists, is dropped, and the model refit.&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\hat{y} = \beta_0 + \beta_1 x_1 + \beta_{i-1} x_{i-1} + \beta_{i+1} x_{i+1} + ... + \beta_N x_N\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Repeat 2 until a stopping criteria is reached.
+&lt;ul&gt;
+&lt;li&gt;Could be when all remaining coefficient p-values are less than the predefined &lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt; value [say, 0.05], or there is only one coefficient remaining.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div id=&#34;p-values-and-their-properties&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;P-values and their properties&lt;/h2&gt;
+&lt;p&gt;In order to see and understand why step-wise backward selection may not be an ideal method of covariate selection, we must understand a bit more about p-values. We will accomplish this be examining the distribution of p-values under the null hypothesis where &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; is independent of &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;First, let’s set our seed and load some dependencies.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# R 3.3.2
+library(&amp;quot;dplyr&amp;quot;)
+library(&amp;quot;broom&amp;quot;)
+set.seed(123)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s say we are interested in understanding the relationship between &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;, which under the null hypothesis, &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; are independent.&lt;/p&gt;
+&lt;p&gt;Under the null, what would be expect?&lt;/p&gt;
+&lt;p&gt;Well, lets set our significance/&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;-level to 0.05. By definition of &lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;-level we know that approximately 5% of our results would be significant despite there being no actual relationship present. Furthermore, because there is no &lt;em&gt;real&lt;/em&gt; relationship, we would also expect the resulting p-values to be uniform on (0,1).&lt;/p&gt;
+&lt;p&gt;Let’s take a look at 1,000 simulated situations where the linear relationship between &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; is compared where both variables are actually independent of one another - I’ll using dplyr for better readability:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- vector()
+sim1 &amp;lt;- 1000
+# lets run this simulation 10,000 times
+for (i in 1:sim1){
+
+        data_set &amp;lt;- data.frame(rnorm(1000), rnorm(1000))
+
+        colnames(data_set) &amp;lt;- c(&amp;quot;y&amp;quot;,&amp;quot;x&amp;quot;)
+
+        # lets fit our linear model
+        p_val &amp;lt;- lm(y ~ x, data = data_set) %&amp;gt;%
+
+        # then lets extract our &amp;#39;tidy&amp;#39; output
+                broom::tidy() %&amp;gt;%               
+
+        # then we will remove the intercept coefficient
+                dplyr::slice(-1) %&amp;gt;%            
+
+        # then we will select select our p-values
+                dplyr::select(p.value) #%&amp;gt;%
+
+        # storing our generated p-value in a list of p-values
+        x &amp;lt;- append(x, p_val)
+
+}
+
+# storing our list of p-values as a vector for easier plotting etc.
+x &amp;lt;- as.numeric(x)
+
+# looking at our results
+hist(x,
+     col = &amp;quot;steelblue&amp;quot;,
+     main = &amp;quot;Distribution of p-values&amp;quot;,
+     # sub = &amp;quot;test&amp;quot;,
+     xlab = &amp;quot;P-value&amp;quot;,
+     ylab = &amp;quot;Count&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-01-22-backwards_selection_files/figure-html/pt1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Distribution of p-values in our null, simple linear regression case. Note - the distribution of p-values is what we’d expect, seemingly uniform distribution with &lt;span class=&#34;math inline&#34;&gt;\(49\)&lt;/span&gt; [&lt;span class=&#34;math inline&#34;&gt;\(4.9\)&lt;/span&gt; %] of our simulated examples reaching sub-&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt; level significance. The take away here is that the percentage of false positives [our realized type I error rate] is very close to our theoretical estimate of 5%, our &lt;em&gt;A priori&lt;/em&gt; Type I error rate - exactly what we would hope.&lt;/p&gt;
+&lt;p&gt;Now that we understand some of the behavior of p-values, let’s take a look at backward selection using 2 variables.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;backward-selection&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Backward Selection&lt;/h2&gt;
+&lt;div id=&#34;our-backward-step-wise-selectionelimination-algorithm&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;em&gt;Our&lt;/em&gt; Backward Step-wise selection/elimination algorithm&lt;/h3&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Fit a full model using &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; &amp;amp; &lt;span class=&#34;math inline&#34;&gt;\(x_2\)&lt;/span&gt;.
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;If at least &lt;span class=&#34;math inline&#34;&gt;\(\beta_1\)&lt;/span&gt; or &lt;span class=&#34;math inline&#34;&gt;\(\beta_2\)&lt;/span&gt; is non significant, remove &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt; with the weakest relationship and refit the model otherwise move to 3.
+&lt;ul&gt;
+&lt;li&gt;$ = _0 + _i x_i where _i is more significant and _j is not.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Stop removing covariates when either both &lt;span class=&#34;math inline&#34;&gt;\(\beta_1\)&lt;/span&gt; &amp;amp; &lt;span class=&#34;math inline&#34;&gt;\(\beta_2\)&lt;/span&gt; are significant, or there is only one variable remaining.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We would expect that, under the null hypothesis: both &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(x_2\)&lt;/span&gt; are independent of &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(x_2\)&lt;/span&gt; are independent of themselves, there would be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(0.005^2 \times 1000 =0.025\)&lt;/span&gt; simulated runs where both coefficients are significant.&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\((0.05 + 0.05 - 2 \times 0.05^2) * 10000 = 95\)&lt;/span&gt; simulated runs where one coefficient is significant.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x2 &amp;lt;- vector()
+
+double_sig &amp;lt;- 0
+
+# lets simulate this situation 10000 times.
+sim2_num &amp;lt;- 1000
+for (i in 1:sim2_num){
+
+        # creating testing data
+        data_set &amp;lt;- data.frame(rnorm(1000),
+                rnorm(1000),
+                rnorm(1000)
+                )
+
+        colnames(data_set) &amp;lt;- c(&amp;quot;y&amp;quot;, &amp;quot;x1&amp;quot;, &amp;quot;x2&amp;quot;)
+
+        #fitting lm
+        p_vals &amp;lt;- lm(y ~ x1 + x2, data = data_set) %&amp;gt;%
+
+        # then obtaining tidy output
+                broom::tidy() %&amp;gt;%  
+
+        # then removing intercept coef        
+                dplyr::slice(-1) %&amp;gt;%            
+
+        # then selecting pvalues
+                dplyr::select(term, p.value)
+
+        # checking stopping criteria
+        # IF both at least one coefficients is not significant
+        # then we remove the coefficient with a higher p-value
+        # and re-run the regression
+
+        if (sum(p_vals$p.value &amp;gt; 0.05) &amp;gt;= 1) {
+                var_keep &amp;lt;- which.min(p_vals$p.value) + 1
+                data_set &amp;lt;- data_set %&amp;gt;%
+                        dplyr::select(c(1,var_keep))
+
+                p_vals &amp;lt;- lm(y ~ ., data = data_set) %&amp;gt;%
+                        broom::tidy() %&amp;gt;%
+                        dplyr::slice(-1) %&amp;gt;%
+                        dplyr::select(p.value) %&amp;gt;%
+                        as.numeric()
+
+                x2 &amp;lt;- append(x2, p_vals)
+
+        # otherwise, we will record that both coefficients were significant
+        } else {
+                double_sig &amp;lt;- double_sig + 1
+        }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Out of the 1000 simulations, 2 [0.2%] were significant at both coefficients. These results were right on par with our theoretical estimations made prior to the simulation.&lt;/p&gt;
+&lt;p&gt;Similarly however, the number of simulations with exactly one coefficient appearing as significant was 115 [11.5%].&lt;/p&gt;
+&lt;p&gt;Here lies the important problem:&lt;/p&gt;
+&lt;p&gt;If you were to conduct this backward selection in the same way &lt;em&gt;and&lt;/em&gt; report one of these regression results, &lt;em&gt;and&lt;/em&gt; call all coefficients with a p-value below 0.05 as significant, your true false positive rate would actually be much higher. As we saw in this analysis, despite there being no real relationship between either &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; or &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;, we recorded that of the 1000 simulated regressions 998 utilized the backward selection algorithm to drop the least significant coefficient. If a researcher/scientist/statistician reported such a regression, their probability of a type 1 error would be about 11.7%, despite being at an &lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt; level of 0.05, suggesting false confidence in the results as an improper . This severe Type I error rate inflation could be dangerous, signaling extraneous relationships as real, and leading researchers in the wrong direction.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hist(x2,
+     col = &amp;quot;steelblue&amp;quot;,
+     main = &amp;quot;Distribution of p-values&amp;quot;,
+     xlab = &amp;quot;P-values&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-01-22-backwards_selection_files/figure-html/looking_at_x2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Distribution of p-values excluding the 2 observations where both observations were significant is non-uniform. Clearly we can see very strong skewness towards small p-values despite the absence of any relationship between &lt;span class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt; or &lt;span class=&#34;math inline&#34;&gt;\(x_2\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; whatsoever.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;other-options-and-takeaways&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Other Options and Takeaways&lt;/h2&gt;
+&lt;p&gt;As we saw here, even a small alteration to our methodologies can have striking effects on our type I error rates, and in turn our results and interpretations. It is important when doing any sort of selection method to consider how this type I error rate [which is really one of the most important concepts of hypothesis testing] may be changing, and report it. Model and covariate selection are tricky concepts, partly for the same reason outlined above. Even some ‘robust’ methodologies such as the &lt;a href=&#34;https://arxiv.org/pdf/0808.0967.pdf&#34;&gt;LASSO&lt;/a&gt; can be tainted with bias [although in a bit different form]. The best defense to these issues can be to understand what biases &lt;em&gt;may&lt;/em&gt; be occurring and accounting for them. For instance, it still may be possible to utilize backward selection by using a p-value correction method.&lt;/p&gt;
+&lt;div id=&#34;links&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Links&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Ingo’s notes on &lt;a href=&#34;http://www.biostat.jhsph.edu/~iruczins/teaching/jf/ch10.pdf&#34;&gt;Variable Selection&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Problems with the &lt;a href=&#34;https://arxiv.org/pdf/0808.0967.pdf&#34;&gt;LASSO&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;This &lt;a href=&#34;https://github.com/mattkcole/mattkcole.github.io/blob/master/_rmds/backwards_selection.rmd&#34;&gt;analyis&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

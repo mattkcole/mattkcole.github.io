@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R Package on Matt Cole&#39;s Site</title>
+    <link>/categories/r-package/index.xml</link>
+    <description>Recent content in R Package on Matt Cole&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/categories/r-package/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Looking Both Ways - Infix Functions</title>
+      <link>/2017/02/05/looking-both-ways---infix-functions/</link>
+      <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/02/05/looking-both-ways---infix-functions/</guid>
+      <description>&lt;p&gt;In your R journeys you may have come across some interesting functions like &lt;code&gt;apply&lt;/code&gt; statements or even &lt;code&gt;lm&lt;/code&gt;. One function that is particularly helpful (and interesting) is the piping operator (&lt;code&gt;%&amp;gt;%&lt;/code&gt;) from the &lt;a href=&#34;https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html&#34;&gt;magrittr pacakge&lt;/a&gt;. You may have noticed that the piping operator is similar to the matrix multiplcation operator &lt;code&gt;%*%&lt;/code&gt;, in that they are both &lt;em&gt;sandwitch&lt;/em&gt; functions (may or may not be trying to coin this term right now), as the function call is/are a symbol(s) enclosed by a &lt;code&gt;%&lt;/code&gt; on both times. These sandwitch functions in R are actually members of a larger class of functions, known as &lt;em&gt;infix&lt;/em&gt; &lt;a href=&#34;https://en.wikipedia.org/wiki/Infix_notation&#34;&gt;functions&lt;/a&gt;. Unlike most functions such as &lt;code&gt;mean()&lt;/code&gt;, &lt;code&gt;summary()&lt;/code&gt;, or &lt;code&gt;kable()&lt;/code&gt;, are &lt;em&gt;prefix&lt;/em&gt; functions, which take their arguments after the fucntion is called (&lt;code&gt;mean(c(1.2,1.6,0.4,3.1)&lt;/code&gt;). Infix fuctions on the other hand, come inbetween its (two) arguments. Other infix functions include basic addition, and subtraction (&lt;code&gt;+&lt;/code&gt;, &lt;code&gt;-&lt;/code&gt;) and all your other common aresthmatic functions. Many in R however, are functions enclosed by a % on both side to indicate their special features. Some other examples are &lt;code&gt;%*%&lt;/code&gt; (matrix multiplication), or &lt;code&gt;%in%&lt;/code&gt;, &lt;a href=&#34;http://adv-r.had.co.nz/Functions.html&#34;&gt;etc&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;matrix(c(1:4),2) %*% matrix(c(1,0,0,1),2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##      [,1] [,2]
+## [1,]    1    3
+## [2,]    2    4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can even define our own infix functions as follows:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;`%+2%` &amp;lt;- function(x, y){
+return(x + y + 2)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So, what would &lt;code&gt;1 %+2% 1&lt;/code&gt; result in?&lt;/p&gt;
+&lt;p&gt;In short, while these functions are, deep down, just regular functions. They can improve readability considerably in your code - imagine needing to use &lt;code&gt;add(x,y)&lt;/code&gt; whenever you had to find the sum of two numbers.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;(2+2) * 10 - 6&lt;/code&gt; would turn into &lt;code&gt;subtract(multiply(add(2,2),10),6)&lt;/code&gt;. What a monster!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

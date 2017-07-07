@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data on Matt Cole&#39;s Site</title>
+    <link>/tags/data/index.xml</link>
+    <description>Recent content in Data on Matt Cole&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/data/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Pipes in R</title>
+      <link>/2017/07/02/pipes-in-r/</link>
+      <pubDate>Sun, 02 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/07/02/pipes-in-r/</guid>
+      <description>&lt;p&gt;Data scientists and the Mario Brothers agree - pipes rock.&lt;/p&gt;
+&lt;p&gt;If you have been using R for data ‘plumbing’/wrangling etc. you have undoubtedly came across the fantastic &lt;a href=&#34;https://github.com/tidyverse/dplyr&#34;&gt;dplyr&lt;/a&gt; package and then by default, the the standard pipe.&lt;/p&gt;
+&lt;p&gt;The pipes we will be discussing today are from the &lt;a href=&#34;https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html&#34;&gt;magrittr pacakge&lt;/a&gt;, which is where dplyr’s ‘standard’ pipe comes from (repo is &lt;a href=&#34;https://github.com/tidyverse/magrittr&#34;&gt;here&lt;/a&gt;). Straight from the highly recommended magrittr &lt;a href=&#34;https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html&#34;&gt;vignette&lt;/a&gt;, the purpose of pipes and the magrittr package itself is to “decrease development time and to improve readability and maintainability of code” - who wouldn’t like that?&lt;/p&gt;
+&lt;p&gt;As mentioned above, pipes are a fantastic way to improve readability in your code, an attribute that has been written about &lt;a href=&#34;https://www.r-statistics.com/2014/08/simpler-r-coding-with-pipes-the-present-and-future-of-the-magrittr-package/&#34;&gt;many&lt;/a&gt; &lt;a href=&#34;http://www.econometricsbysimulation.com/2014/07/more-readable-code-with-pipes-in-r.html&#34;&gt;times&lt;/a&gt;. This readability quickly translates into more efficient code by writing less, and understanding more.&lt;/p&gt;
+&lt;p&gt;Let’s take a tour:&lt;/p&gt;
+&lt;p&gt;First of all, pipes are &lt;a href=&#34;https://mattkcole.com/2017-02-22-intro-to-infix-functions/&#34;&gt;infix functions&lt;/a&gt;, which call their arguments on either side, instead of the more common prefix functions which take arguments after the function is called.&lt;/p&gt;
+&lt;p&gt;Now, onto the magrittr pipes!&lt;/p&gt;
+&lt;div id=&#34;standard-pipe&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Standard pipe: &lt;code&gt;%&amp;gt;%&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;So, here we will do a short run through of the basic piping operator (%&amp;gt;%) for those new to the concept, and discuss some of other pipes that could be useful to experienced useRs. These pipes have a history of being introduced alongside the dplyr package, which together makes for some incredibly powerful, yet concise code (so powerful, during a technical job interview I was asked to stop using dplyr/pipes…).&lt;/p&gt;
+&lt;p&gt;The standard pipe takes the object to its left, and passes it as the &lt;em&gt;first&lt;/em&gt; argument in the function to the right. When reading code, we can then read the pipe operator simply as: ‘then’.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(datasets)
+library(dplyr)
+library(magrittr)
+trees %&amp;gt;%
+        dplyr::filter(Girth &amp;gt; 9) %&amp;gt;%
+        dplyr::select(Height, Volume) %&amp;gt;%
+        summary()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##      Height          Volume     
+##  Min.   :64.00   Min.   :15.60  
+##  1st Qu.:74.00   1st Qu.:20.73  
+##  Median :77.50   Median :25.30  
+##  Mean   :77.07   Mean   :32.30  
+##  3rd Qu.:80.25   3rd Qu.:39.38  
+##  Max.   :87.00   Max.   :77.00&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This can be read as “Take the trees data set, then show only the trees with girth greater than 9, then select the height and volume of those trees, then compute summary statistics on those two variables”.&lt;/p&gt;
+&lt;p&gt;Without pipes we’d use:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# complete base R way:
+summary(trees[trees$Girth &amp;gt; 9, 2:3])&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##      Height          Volume     
+##  Min.   :64.00   Min.   :15.60  
+##  1st Qu.:74.00   1st Qu.:20.73  
+##  Median :77.50   Median :25.30  
+##  Mean   :77.07   Mean   :32.30  
+##  3rd Qu.:80.25   3rd Qu.:39.38  
+##  Max.   :87.00   Max.   :77.00&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# or
+
+# using dplyr
+trees_of_interest &amp;lt;- dplyr::filter(trees, Girth &amp;gt; 9)
+vars_of_interest &amp;lt;- dplyr::select(trees_of_interest, Height, Volume)
+summary(vars_of_interest)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##      Height          Volume     
+##  Min.   :64.00   Min.   :15.60  
+##  1st Qu.:74.00   1st Qu.:20.73  
+##  Median :77.50   Median :25.30  
+##  Mean   :77.07   Mean   :32.30  
+##  3rd Qu.:80.25   3rd Qu.:39.38  
+##  Max.   :87.00   Max.   :77.00&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Very quickly we can identify the benefits here, readability. With &lt;code&gt;%&amp;gt;%&lt;/code&gt; we can read the data munging process from left to right, just like English. Compare this with the ‘base R’ approach in the second chunk - have to read as a mix of left to right with functions being called on parsed objects - quite a mess. Even using dplyr is not enough to make this process readable, we’ve just created two additional data frames just to compute these summary statistics (which, not to mention, could be computationally intense in bigger datasets).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tree-pipe-t&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Tree pipe: &lt;code&gt;%T&amp;gt;%&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;The tree pipe is very similar to the standard pipe, however, it returns the &lt;em&gt;left&lt;/em&gt; input instead of the operated value. Check out the difference below:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;1:10 %&amp;gt;%
+        mean()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 5.5&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;1:10 %T&amp;gt;%
+        mean()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1]  1  2  3  4  5  6  7  8  9 10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You might be wondering why this is useful, which is fair. This operator works very well plotting data mid ‘pipeline’ as well as in some other, more niche areas.&lt;/p&gt;
+&lt;p&gt;For example, say we are wrangling data, want to plot it, but also would like to visualize it:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(datasets)
+mtcars %&amp;gt;%
+        dplyr::group_by(cyl) %&amp;gt;%
+        dplyr::summarise(mean_hp = mean(hp)) %T&amp;gt;%
+        plot(main = &amp;quot;Horsepower by cylinders - mtcars edition&amp;quot;,
+             xlab = &amp;quot;cylinders&amp;quot;, ylab = &amp;quot;horse power&amp;quot;,
+             type = &amp;quot;l&amp;quot;, lwd = 3, col = &amp;quot;steelblue&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-07-02-Pipes-in-R_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 2
+##     cyl   mean_hp
+##   &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;
+## 1     4  82.63636
+## 2     6 122.28571
+## 3     8 209.21429&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here we were able to return a nice plot as well as a data matrix without rewriting / copy &amp;amp; pasting code.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exposition-pipe&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Exposition pipe: &lt;code&gt;%$%&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Admittedly, this is not a pipe operator I have used often (read: at all), but it is featured in the package. Essentially &lt;code&gt;%$%&lt;/code&gt; is a ‘pipe friendly’ way to pull objects from a data frame, similarly to the base R method of using &lt;code&gt;$&lt;/code&gt; to extract a single element (column) from an object (data frame, typically).&lt;/p&gt;
+&lt;p&gt;Thus, writing this code to plot a box plot from the horsepower (hp) vector of the mtcars data could be written like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;boxplot(mtcars$hp)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-07-02-Pipes-in-R_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;or, using the exposition pipe, like the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %$%
+  boxplot(hp)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-07-02-Pipes-in-R_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Without knowing the exposition pipe I may have written the same code as:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%
+        dplyr::select(hp) %&amp;gt;%
+        boxplot()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-07-02-Pipes-in-R_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;This results in the exact same output as the previous two chunks, but is one line longer than the exposition example - I will be sure to include it in my toolbox!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;compound-assignment-pipe&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;compound assignment pipe: &lt;code&gt;%&amp;lt;&amp;gt;%&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Here it is important to note that there are many different philosophies regarding nearly all aspects of data management, particularly when it comes to overwriting your data. While there are certain circumstances where overwriting may be ok, it is always important to be careful! The compound assignment pipe rewrites the left hand object with the output of the function to the right.&lt;/p&gt;
+&lt;p&gt;In practice:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(100)
+
+x &amp;lt;- rnorm(100)
+x %&amp;lt;&amp;gt;% round() %&amp;gt;% median()
+x&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What happened here? We defined x as a string of 100 random standard normals, then reassigned x as the median rounded value. This could save a little bit of typing as I typically see the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(100)
+
+x &amp;lt;- rnorm(100)
+x &amp;lt;- x %&amp;gt;% round() %&amp;gt;% median()
+x&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;in-short&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;In short:&lt;/h3&gt;
+&lt;p&gt;Pipes are not absolutely required for any particular analysis, but can drastically improve readability and reduce the number of lines needed (two sometimes competing birds with one stone here!). Once you have mastered the standard pipe (&lt;code&gt;%&amp;gt;%&lt;/code&gt;) you should spend some time exploring and utilizing the others, as they function well in different yet common situations. I for one am going to spend some more time with the exposition pipe which can help shave a line of code when selecting a single column from a data frame.&lt;/p&gt;
+&lt;p&gt;Let me know if you have any questions or comments!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

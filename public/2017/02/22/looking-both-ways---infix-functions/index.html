@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.18.1" />
+
+
+<title>Looking Both Ways - Infix Functions - Some %R% tips  - Matt Cole&#39;s Site</title>
+<meta property="og:title" content="Looking Both Ways - Infix Functions - Matt Cole&#39;s Site">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/avatar-icon.JPG"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/mattkcole">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/mattco13">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">2 min read</span>
+    
+
+    <h1 class="article-title">Looking Both Ways - Infix Functions</h1>
+
+    
+    <span class="article-date">2017/02/22</span>
+    
+
+    <div class="article-content">
+      <p>In your R journeys you may have come across some interesting functions
+like <code>%*%</code>  or even <code>%in%</code>. One function that is particularly
+helpful (and interesting) is the piping operator (<code>%&gt;%</code>) from the
+<a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html">magrittr
+pacakge</a>.
+You probably noticed that the piping operator is similar to the matrix
+multiplication operator <code>%*%</code>, in that they are both <em>sandwich</em>
+functions (may or may not be trying to coin this term right now), as the
+function call is/are a symbol(s) enclosed by <code>%</code> on both sides. These
+sandwich functions in R are actually members of a larger class of
+functions, known as <em>infix</em>
+<a href="https://en.wikipedia.org/wiki/Infix_notation">functions</a>. Most functions in R are <em>prefix</em> functions, meaning that the function is called, followed by the function&rsquo;s arguments such as in <code>mean(heights)</code>, <code>apply(w,1,mean)</code>, or <code>glm(y ~ x, data = data)</code>. Infix functions on the other hand are called in between two arguments.</p>
+
+<pre><code>param1 %infix_function% param2
+</code></pre>
+
+<p>Infix functions are everywhere in R, and understanding them can really improve intelligibility and development time. The most common infix functions include basic
+addition, and subtraction (<code>+</code>, <code>-</code>) and all your other
+arithmetic functions (you use them every day!).</p>
+
+<p>Sometimes we might want to use our own infix functions.
+We can define our own as follows:</p>
+
+<pre><code>`%+2%` &lt;- function(x, y){
+return(x + y + 2)
+}
+</code></pre>
+
+<p>So, what would <code>1 %+2% 1</code> result in?</p>
+
+<p>In short, while these functions are, deep down, just regular functions, they can improve readability considerably in your code - imagine needing
+to use <code>add(x,y)</code> or <code>multiply(a,b)</code> whenever you had to find the sum or product of numbers.</p>
+
+<p><code>(2+2) * 10 - 6</code> would turn into <code>subtract(multiply(add(2,2),10),6)</code>.
+What a monster!</p>
+
+<p>Some other exciting infix functions include:
+<code>%%</code> (<a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.pdf">binary modulus</a>), <code>%/%</code> (<a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.pdf">binary integer divide</a>), <code>%in%</code> (<a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.pdf">matching operator</a>), <code>%o%</code> (<a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.pdf">outer product</a>), <code>%x%</code> (<a href="https://en.wikipedia.org/wiki/Kronecker_product">Kronecker product</a>)</p>
+
+<p>For further reading, as always, Hadley has some great <a href="http://adv-r.had.co.nz/Functions.html">stuff</a>.</p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+

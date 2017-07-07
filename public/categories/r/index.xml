@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on Matt Cole&#39;s Site</title>
+    <link>/categories/r/index.xml</link>
+    <description>Recent content in R on Matt Cole&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Pipes in R</title>
+      <link>/2017/07/02/pipes-in-r/</link>
+      <pubDate>Sun, 02 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/07/02/pipes-in-r/</guid>
+      <description>&lt;p&gt;Data scientists and the Mario Brothers agree - pipes rock.&lt;/p&gt;
+&lt;p&gt;If you have been using R for data ‘plumbing’/wrangling etc. you have undoubtedly came across the fantastic &lt;a href=&#34;https://github.com/tidyverse/dplyr&#34;&gt;dplyr&lt;/a&gt; package and then by default, the the standard pipe.&lt;/p&gt;
+&lt;p&gt;The pipes we will be discussing today are from the &lt;a href=&#34;https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html&#34;&gt;magrittr pacakge&lt;/a&gt;, which is where dplyr’s ‘standard’ pipe comes from (repo is &lt;a href=&#34;https://github.com/tidyverse/magrittr&#34;&gt;here&lt;/a&gt;). Straight from the highly recommended magrittr &lt;a href=&#34;https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html&#34;&gt;vignette&lt;/a&gt;, the purpose of pipes and the magrittr package itself is to “decrease development time and to improve readability and maintainability of code” - who wouldn’t like that?&lt;/p&gt;
+&lt;p&gt;As mentioned above, pipes are a fantastic way to improve readability in your code, an attribute that has been written about &lt;a href=&#34;https://www.r-statistics.com/2014/08/simpler-r-coding-with-pipes-the-present-and-future-of-the-magrittr-package/&#34;&gt;many&lt;/a&gt; &lt;a href=&#34;http://www.econometricsbysimulation.com/2014/07/more-readable-code-with-pipes-in-r.html&#34;&gt;times&lt;/a&gt;. This readability quickly translates into more efficient code by writing less, and understanding more.&lt;/p&gt;
+&lt;p&gt;Let’s take a tour:&lt;/p&gt;
+&lt;p&gt;First of all, pipes are &lt;a href=&#34;https://mattkcole.com/2017-02-22-intro-to-infix-functions/&#34;&gt;infix functions&lt;/a&gt;, which call their arguments on either side, instead of the more common prefix functions which take arguments after the function is called.&lt;/p&gt;
+&lt;p&gt;Now, onto the magrittr pipes!&lt;/p&gt;
+&lt;div id=&#34;standard-pipe&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Standard pipe: &lt;code&gt;%&amp;gt;%&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;So, here we will do a short run through of the basic piping operator (%&amp;gt;%) for those new to the concept, and discuss some of other pipes that could be useful to experienced useRs. These pipes have a history of being introduced alongside the dplyr package, which together makes for some incredibly powerful, yet concise code (so powerful, during a technical job interview I was asked to stop using dplyr/pipes…).&lt;/p&gt;
+&lt;p&gt;The standard pipe takes the object to its left, and passes it as the &lt;em&gt;first&lt;/em&gt; argument in the function to the right. When reading code, we can then read the pipe operator simply as: ‘then’.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(datasets)
+library(dplyr)
+library(magrittr)
+trees %&amp;gt;%
+        dplyr::filter(Girth &amp;gt; 9) %&amp;gt;%
+        dplyr::select(Height, Volume) %&amp;gt;%
+        summary()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##      Height          Volume     
+##  Min.   :64.00   Min.   :15.60  
+##  1st Qu.:74.00   1st Qu.:20.73  
+##  Median :77.50   Median :25.30  
+##  Mean   :77.07   Mean   :32.30  
+##  3rd Qu.:80.25   3rd Qu.:39.38  
+##  Max.   :87.00   Max.   :77.00&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This can be read as “Take the trees data set, then show only the trees with girth greater than 9, then select the height and volume of those trees, then compute summary statistics on those two variables”.&lt;/p&gt;
+&lt;p&gt;Without pipes we’d use:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# complete base R way:
+summary(trees[trees$Girth &amp;gt; 9, 2:3])&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##      Height          Volume     
+##  Min.   :64.00   Min.   :15.60  
+##  1st Qu.:74.00   1st Qu.:20.73  
+##  Median :77.50   Median :25.30  
+##  Mean   :77.07   Mean   :32.30  
+##  3rd Qu.:80.25   3rd Qu.:39.38  
+##  Max.   :87.00   Max.   :77.00&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# or
+
+# using dplyr
+trees_of_interest &amp;lt;- dplyr::filter(trees, Girth &amp;gt; 9)
+vars_of_interest &amp;lt;- dplyr::select(trees_of_interest, Height, Volume)
+summary(vars_of_interest)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##      Height          Volume     
+##  Min.   :64.00   Min.   :15.60  
+##  1st Qu.:74.00   1st Qu.:20.73  
+##  Median :77.50   Median :25.30  
+##  Mean   :77.07   Mean   :32.30  
+##  3rd Qu.:80.25   3rd Qu.:39.38  
+##  Max.   :87.00   Max.   :77.00&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Very quickly we can identify the benefits here, readability. With &lt;code&gt;%&amp;gt;%&lt;/code&gt; we can read the data munging process from left to right, just like English. Compare this with the ‘base R’ approach in the second chunk - have to read as a mix of left to right with functions being called on parsed objects - quite a mess. Even using dplyr is not enough to make this process readable, we’ve just created two additional data frames just to compute these summary statistics (which, not to mention, could be computationally intense in bigger datasets).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tree-pipe-t&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Tree pipe: &lt;code&gt;%T&amp;gt;%&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;The tree pipe is very similar to the standard pipe, however, it returns the &lt;em&gt;left&lt;/em&gt; input instead of the operated value. Check out the difference below:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;1:10 %&amp;gt;%
+        mean()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 5.5&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;1:10 %T&amp;gt;%
+        mean()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1]  1  2  3  4  5  6  7  8  9 10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You might be wondering why this is useful, which is fair. This operator works very well plotting data mid ‘pipeline’ as well as in some other, more niche areas.&lt;/p&gt;
+&lt;p&gt;For example, say we are wrangling data, want to plot it, but also would like to visualize it:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(datasets)
+mtcars %&amp;gt;%
+        dplyr::group_by(cyl) %&amp;gt;%
+        dplyr::summarise(mean_hp = mean(hp)) %T&amp;gt;%
+        plot(main = &amp;quot;Horsepower by cylinders - mtcars edition&amp;quot;,
+             xlab = &amp;quot;cylinders&amp;quot;, ylab = &amp;quot;horse power&amp;quot;,
+             type = &amp;quot;l&amp;quot;, lwd = 3, col = &amp;quot;steelblue&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-07-02-Pipes-in-R_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 2
+##     cyl   mean_hp
+##   &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;
+## 1     4  82.63636
+## 2     6 122.28571
+## 3     8 209.21429&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here we were able to return a nice plot as well as a data matrix without rewriting / copy &amp;amp; pasting code.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exposition-pipe&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Exposition pipe: &lt;code&gt;%$%&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Admittedly, this is not a pipe operator I have used often (read: at all), but it is featured in the package. Essentially &lt;code&gt;%$%&lt;/code&gt; is a ‘pipe friendly’ way to pull objects from a data frame, similarly to the base R method of using &lt;code&gt;$&lt;/code&gt; to extract a single element (column) from an object (data frame, typically).&lt;/p&gt;
+&lt;p&gt;Thus, writing this code to plot a box plot from the horsepower (hp) vector of the mtcars data could be written like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;boxplot(mtcars$hp)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-07-02-Pipes-in-R_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;or, using the exposition pipe, like the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %$%
+  boxplot(hp)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-07-02-Pipes-in-R_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Without knowing the exposition pipe I may have written the same code as:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%
+        dplyr::select(hp) %&amp;gt;%
+        boxplot()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-07-02-Pipes-in-R_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;This results in the exact same output as the previous two chunks, but is one line longer than the exposition example - I will be sure to include it in my toolbox!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;compound-assignment-pipe&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;compound assignment pipe: &lt;code&gt;%&amp;lt;&amp;gt;%&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Here it is important to note that there are many different philosophies regarding nearly all aspects of data management, particularly when it comes to overwriting your data. While there are certain circumstances where overwriting may be ok, it is always important to be careful! The compound assignment pipe rewrites the left hand object with the output of the function to the right.&lt;/p&gt;
+&lt;p&gt;In practice:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(100)
+
+x &amp;lt;- rnorm(100)
+x %&amp;lt;&amp;gt;% round() %&amp;gt;% median()
+x&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What happened here? We defined x as a string of 100 random standard normals, then reassigned x as the median rounded value. This could save a little bit of typing as I typically see the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(100)
+
+x &amp;lt;- rnorm(100)
+x &amp;lt;- x %&amp;gt;% round() %&amp;gt;% median()
+x&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;in-short&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;In short:&lt;/h3&gt;
+&lt;p&gt;Pipes are not absolutely required for any particular analysis, but can drastically improve readability and reduce the number of lines needed (two sometimes competing birds with one stone here!). Once you have mastered the standard pipe (&lt;code&gt;%&amp;gt;%&lt;/code&gt;) you should spend some time exploring and utilizing the others, as they function well in different yet common situations. I for one am going to spend some more time with the exposition pipe which can help shave a line of code when selecting a single column from a data frame.&lt;/p&gt;
+&lt;p&gt;Let me know if you have any questions or comments!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The Namespace Rabbit Hole</title>
+      <link>/2017/03/30/the-namespace-rabbit-hole/</link>
+      <pubDate>Thu, 30 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/03/30/the-namespace-rabbit-hole/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been working on an &lt;a href=&#34;https://github.com/mattkcole/FAtools&#34;&gt;R package&lt;/a&gt; for factor analysis visualization for a while now, and ran into an interesting problem. One function in &lt;a href=&#34;https://github.com/mattkcole/FAtools&#34;&gt;FAtools&lt;/a&gt; is essentially a wrapper for several functions in the nFactors package, which plots and displays both graphical and non graphical &lt;a href=&#34;http://econtent.hogrefe.com/doi/abs/10.1027/1614-2241/a000051?journalCode=med&#34;&gt;scree test&lt;/a&gt; solutions. It&amp;rsquo;s a handy way for people to look &lt;em&gt;a little&lt;/em&gt; more closely at the number of factors to extract (although, I would argue not enough).&lt;/p&gt;
+
+&lt;p&gt;My &lt;code&gt;scree_plot&lt;/code&gt; function requires two functions from the nFactors package: &lt;code&gt;parallel&lt;/code&gt; and &lt;code&gt;nScree&lt;/code&gt;. So, using &lt;a href=&#34;https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html&#34;&gt;roxygen2&lt;/a&gt;, I added the following to my DESCRIPTION file, telling R that the nFactors package would be utilized in FAtools:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Imports:
+    nFactors
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and the following roxygen2 code above my &lt;code&gt;scree_plot&lt;/code&gt; function to tell R that in this function we would be utilizing &lt;code&gt;parallel&lt;/code&gt; and &lt;code&gt;nScree&lt;/code&gt; from nFactors:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#&#39; @importFrom nFactors parallel nScree
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I thought to myself - I&amp;rsquo;m all set, I can&amp;rsquo;t wait to share this function! But in a few seconds my package dreams were shattered. While building, I received the following error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Error: could not find function &amp;quot;mvrnorm&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s weird. &lt;code&gt;mvrnorm&lt;/code&gt; is a function from the &lt;code&gt;MASS&lt;/code&gt; package which is called by &lt;code&gt;parallel&lt;/code&gt;. &lt;code&gt;mvrnorm&lt;/code&gt; allows us to simulate random draws from a multivariate normal distribution which &lt;code&gt;parallel&lt;/code&gt; requires in order to conduct parallel analysis. Clearly, R was able to see &lt;code&gt;parallel&lt;/code&gt;, which was from the nFactors package, but was not able to find a package it relied on - very strange.&lt;/p&gt;
+
+&lt;p&gt;After some head scratching, I thought of an easy fix - explicitly import &lt;code&gt;mvrnorm&lt;/code&gt;. The following changes were made:&lt;/p&gt;
+
+&lt;p&gt;DESCRIPTION:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Imports:
+    MASS,
+    nFactors
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;top of scree_plot.R&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#&#39; @importFrom MASS mvrnorm
+#&#39; @importFrom nFactors parallel nScree
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Building.&lt;/p&gt;
+
+&lt;p&gt;Building..&lt;/p&gt;
+
+&lt;p&gt;Building&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;Boom, same problem again: &lt;code&gt;Error: could not find function &amp;quot;mvrnorm&amp;quot;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I explicitly called &lt;code&gt;mvrnorm&lt;/code&gt; into the namespace yet R couldn&amp;rsquo;t find it? That doesn&amp;rsquo;t seem right at all. I was getting worried when the hackerman inside came out. I added the following line &lt;em&gt;inside&lt;/em&gt; my &lt;code&gt;scree_plot&lt;/code&gt; function with the hope that by defining &lt;code&gt;mvrnorm&lt;/code&gt; within &lt;code&gt;scree_plot&lt;/code&gt;, something would catch.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#&#39; ...
+#&#39; @importFrom MASS mvrnorm
+#&#39; @importFrom nFactors parallel nScree
+#&#39; ...
+scree_plot &amp;lt;- function(...){
+        mvrnorm &amp;lt;- MASS::mvrnorm
+        ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;then:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Error: could not find function &amp;quot;mvrnorm&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;Again, disappointment - but also confusion. Phrases like &amp;lsquo;lexical scoping&amp;rsquo; and &amp;lsquo;exporting namespace&amp;rsquo; were swirling around my head as I was trying to figure out what was happening. One last idea I had was to literally call &lt;code&gt;library(MASS)&lt;/code&gt; &lt;em&gt;inside&lt;/em&gt; my function like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;scree_plot &amp;lt;- function(...){
+        library(MASS)
+        ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To be honest, I didn&amp;rsquo;t expect this would work, but alas it allowed &lt;code&gt;scree_plot&lt;/code&gt; to function as intended. Now there are several reasons why this is a terrible idea. Most importantly, in my own work, I use dplyr&amp;rsquo;s &lt;code&gt;select&lt;/code&gt; function, which would now be masked by &lt;code&gt;MASS::select&lt;/code&gt;, other people could have even more conflicts because of the now bloated namespace (MASS is not a small package).&lt;/p&gt;
+
+&lt;p&gt;It was around this time I tracked down my friend and R package guru &lt;a href=&#34;http://seankross.com/&#34;&gt;Sean&lt;/a&gt; to help me see what was going on. After some digging around, it was discovered that, prior to R Version 2.14.0 (released in 2011), the only way for a package function to incorporate functions from other packages was by &amp;lsquo;depending&amp;rsquo; on them*. Today, the &lt;code&gt;Depends&lt;/code&gt; field is typically reserved for R version numbers ie. &lt;code&gt;Depends: R (&amp;gt;= 3.1.0)&lt;/code&gt;, which would restrict package use to R version numbers greater than or equal to 3.1.0. Although usually frowned upon, this field can also specify packages (and versions) that are to be essentially loaded concurrently. As Sean discovered, package functions which incorporate another package&amp;rsquo;s function via &lt;em&gt;Depends&lt;/em&gt; cannot be incorporated in your packages, or my packages, or anyone else&amp;rsquo;s package without depending on the same package. Because the last update to the nFactors package was also in 2011, we knew the source of our errors, nFactors depends on MASS.&lt;/p&gt;
+
+&lt;p&gt;So, in my case, I could not incorporate nFactor&amp;rsquo;s &lt;code&gt;parallel&lt;/code&gt; function without specifying: &lt;code&gt;Depends: MASS&lt;/code&gt;. This is not ideal for some of the same reasons calling &lt;code&gt;library(MASS)&lt;/code&gt; inside of a function is not a good idea. But at the end of the day I have only a few options:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Use &lt;code&gt;Depends: MASS&lt;/code&gt; and require all users to have and &amp;lsquo;load&amp;rsquo; MASS when loading FAtools&lt;/li&gt;
+&lt;li&gt;Get the maintainers of nFactors to update their code (that has been neglected for six years)&lt;/li&gt;
+&lt;li&gt;Build my own versions of relevant nFactor functions like &lt;code&gt;parallel&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Each of these would solve my problem while potentially creating new ones or redundant work for myself. But, as of now, I plan on doing all of these in that order. Depending on MASS is not ideal, but for now it certainly gets the job done. Emailing the maintainers of nFactors can&amp;rsquo;t hurt, but I&amp;rsquo;m not particularly hopeful someone would be willing and able to make changes to their package after 6 years of dormancy (although I would be willing to help). Lastly, something I will also probably do, is just write my own functions for conducting parallel analysis so I wouldn&amp;rsquo;t need nFactors, possibly even using c++ (&lt;a href=&#34;http://www.rcpp.org/&#34;&gt;rcpp&lt;/a&gt;), which is something I&amp;rsquo;d like to play around with more.&lt;/p&gt;
+
+&lt;p&gt;So, what did I learn? Well, a ton of things about R package building, including the many ways (you should be able) to import functions from other packages, best practices, etc. Mainly however, IF you are building a package which draws functions from &amp;lsquo;package A&amp;rsquo; which depends on &amp;lsquo;package B&amp;rsquo;, you &lt;em&gt;MUST&lt;/em&gt; &lt;em&gt;depend&lt;/em&gt; on &amp;lsquo;package B&amp;rsquo; and &lt;em&gt;import&lt;/em&gt; &amp;lsquo;package A&amp;rsquo; (although you could also depend on package A, but that&amp;rsquo;s bad form) to use any functions from &amp;lsquo;Package A&amp;rsquo; that also incorporates &amp;lsquo;package B&amp;rsquo;.&lt;/p&gt;
+
+&lt;p&gt;Moral of the story? I&amp;rsquo;m not sure, but beware of incorporating non-maintained packages in your projects (sage advice).&lt;/p&gt;
+
+&lt;p&gt;Relevant links:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Old package dependency mechanism &lt;a href=&#34;http://r-pkgs.had.co.nz/description.html&#34;&gt;source&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;R &lt;a href=&#34;http://r-pkgs.had.co.nz/namespace.html&#34;&gt;namespaces&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=fQGbXmkSArs&amp;amp;ab_channel=mrfyote&#34;&gt;Hackerman&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Functions on Matt Cole&#39;s Site</title>
+    <link>/tags/functions/index.xml</link>
+    <description>Recent content in Functions on Matt Cole&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/functions/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Looking Both Ways - Infix Functions</title>
+      <link>/2017/02/22/looking-both-ways---infix-functions/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/02/22/looking-both-ways---infix-functions/</guid>
+      <description>&lt;p&gt;In your R journeys you may have come across some interesting functions
+like &lt;code&gt;%*%&lt;/code&gt;  or even &lt;code&gt;%in%&lt;/code&gt;. One function that is particularly
+helpful (and interesting) is the piping operator (&lt;code&gt;%&amp;gt;%&lt;/code&gt;) from the
+&lt;a href=&#34;https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html&#34;&gt;magrittr
+pacakge&lt;/a&gt;.
+You probably noticed that the piping operator is similar to the matrix
+multiplication operator &lt;code&gt;%*%&lt;/code&gt;, in that they are both &lt;em&gt;sandwich&lt;/em&gt;
+functions (may or may not be trying to coin this term right now), as the
+function call is/are a symbol(s) enclosed by &lt;code&gt;%&lt;/code&gt; on both sides. These
+sandwich functions in R are actually members of a larger class of
+functions, known as &lt;em&gt;infix&lt;/em&gt;
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Infix_notation&#34;&gt;functions&lt;/a&gt;. Most functions in R are &lt;em&gt;prefix&lt;/em&gt; functions, meaning that the function is called, followed by the function&amp;rsquo;s arguments such as in &lt;code&gt;mean(heights)&lt;/code&gt;, &lt;code&gt;apply(w,1,mean)&lt;/code&gt;, or &lt;code&gt;glm(y ~ x, data = data)&lt;/code&gt;. Infix functions on the other hand are called in between two arguments.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;param1 %infix_function% param2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Infix functions are everywhere in R, and understanding them can really improve intelligibility and development time. The most common infix functions include basic
+addition, and subtraction (&lt;code&gt;+&lt;/code&gt;, &lt;code&gt;-&lt;/code&gt;) and all your other
+arithmetic functions (you use them every day!).&lt;/p&gt;
+
+&lt;p&gt;Sometimes we might want to use our own infix functions.
+We can define our own as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;`%+2%` &amp;lt;- function(x, y){
+return(x + y + 2)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So, what would &lt;code&gt;1 %+2% 1&lt;/code&gt; result in?&lt;/p&gt;
+
+&lt;p&gt;In short, while these functions are, deep down, just regular functions, they can improve readability considerably in your code - imagine needing
+to use &lt;code&gt;add(x,y)&lt;/code&gt; or &lt;code&gt;multiply(a,b)&lt;/code&gt; whenever you had to find the sum or product of numbers.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;(2+2) * 10 - 6&lt;/code&gt; would turn into &lt;code&gt;subtract(multiply(add(2,2),10),6)&lt;/code&gt;.
+What a monster!&lt;/p&gt;
+
+&lt;p&gt;Some other exciting infix functions include:
+&lt;code&gt;%%&lt;/code&gt; (&lt;a href=&#34;https://cran.r-project.org/doc/manuals/r-release/R-lang.pdf&#34;&gt;binary modulus&lt;/a&gt;), &lt;code&gt;%/%&lt;/code&gt; (&lt;a href=&#34;https://cran.r-project.org/doc/manuals/r-release/R-lang.pdf&#34;&gt;binary integer divide&lt;/a&gt;), &lt;code&gt;%in%&lt;/code&gt; (&lt;a href=&#34;https://cran.r-project.org/doc/manuals/r-release/R-lang.pdf&#34;&gt;matching operator&lt;/a&gt;), &lt;code&gt;%o%&lt;/code&gt; (&lt;a href=&#34;https://cran.r-project.org/doc/manuals/r-release/R-lang.pdf&#34;&gt;outer product&lt;/a&gt;), &lt;code&gt;%x%&lt;/code&gt; (&lt;a href=&#34;https://en.wikipedia.org/wiki/Kronecker_product&#34;&gt;Kronecker product&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;For further reading, as always, Hadley has some great &lt;a href=&#34;http://adv-r.had.co.nz/Functions.html&#34;&gt;stuff&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
