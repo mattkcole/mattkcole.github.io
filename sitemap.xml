@@ -47,13 +47,13 @@
   </url>
   
   <url>
-    <loc>/categories/announcement/</loc>
+    <loc>/tags/announcement/</loc>
     <lastmod>2017-01-21T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/announcement/</loc>
+    <loc>/categories/announcement/</loc>
     <lastmod>2017-01-21T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -89,13 +89,13 @@
   </url>
   
   <url>
-    <loc>/categories/forecasting/</loc>
+    <loc>/tags/forecasting/</loc>
     <lastmod>2017-09-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/forecasting/</loc>
+    <loc>/categories/forecasting/</loc>
     <lastmod>2017-09-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -137,14 +137,14 @@
   </url>
   
   <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2017-09-27T00:00:00+00:00</lastmod>
+    <loc>/tags/r/</loc>
+    <lastmod>2017-10-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2017-10-24T00:00:00+00:00</lastmod>
+    <loc>/categories/r/</loc>
+    <lastmod>2017-09-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
