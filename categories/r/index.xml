@@ -2,40 +2,40 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>R on Data &amp; Science: A blog</title>
-    <link>/categories/r/</link>
+    <link>https://mattkcole.github.io/categories/r/</link>
     <description>Recent content in R on Data &amp; Science: A blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 27 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://mattkcole.github.io/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Understanding Food Trends: A Baysian Approach to Forecasting Chipotle</title>
-      <link>/2017/09/27/chipotle/</link>
+      <link>https://mattkcole.github.io/2017/09/27/chipotle/</link>
       <pubDate>Wed, 27 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/09/27/chipotle/</guid>
+      <guid>https://mattkcole.github.io/2017/09/27/chipotle/</guid>
       <description>Since food is such an important aspect of life and public health, I thought it would be exciting to look at food trends over time. Obviously food choices drive public health, but I figured that trends were just this - trends, preferences that may change over time. While a bit broad, I narrowed down ‘food trends’ to be interest in Chipotle Mexican Grill - a fan favorite - over time. Since I don’t readily have any real Chipotle sales data, I decided to make my own - well, kinda.</description>
     </item>
     
     <item>
       <title>The seeds of reproducibility - a 2 minute crash course</title>
-      <link>/2017/08/25/seeds/</link>
+      <link>https://mattkcole.github.io/2017/08/25/seeds/</link>
       <pubDate>Fri, 25 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/08/25/seeds/</guid>
+      <guid>https://mattkcole.github.io/2017/08/25/seeds/</guid>
       <description>While a Teaching Assistant for the 620 Biostatistics sequence at JHU (Statistical Methods in Public Health) one issue came up fairly regularly, the idea of seeds and reproducing results when sometimes non-obvious random elements are involved.
 Many analyses are dependent on some sort of random number generation, weather it be from cross-validation, bootstrapping, imputing, or simulating, it’s inevitable that you’ll need these processes. Because of the nature of ‘random’ things, reproducibility can be tough.</description>
     </item>
     
     <item>
       <title>Beyond %&gt;%, Alternative Pipes in R</title>
-      <link>/2017/07/02/pipes/</link>
+      <link>https://mattkcole.github.io/2017/07/02/pipes/</link>
       <pubDate>Sun, 02 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/07/02/pipes/</guid>
+      <guid>https://mattkcole.github.io/2017/07/02/pipes/</guid>
       <description>Data scientists and the Mario Brothers agree - pipes rock.
 If you have been using R for data ‘plumbing’/wrangling etc. you have undoubtedly came across the fantastic dplyr package and then by default, the the standard pipe.
 The pipes we will be discussing today are from the magrittr pacakge, which is where dplyr’s ‘standard’ pipe comes from (repo is here). Straight from the highly recommended magrittr vignette, the purpose of pipes and the magrittr package itself is to “decrease development time and to improve readability and maintainability of code” - who wouldn’t like that?</description>
@@ -43,10 +43,10 @@ The pipes we will be discussing today are from the magrittr pacakge, which is wh
     
     <item>
       <title>The Namespace Rabbit Hole</title>
-      <link>/2017/03/30/the-namespace-rabbit-hole/</link>
+      <link>https://mattkcole.github.io/2017/03/30/the-namespace-rabbit-hole/</link>
       <pubDate>Thu, 30 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/03/30/the-namespace-rabbit-hole/</guid>
+      <guid>https://mattkcole.github.io/2017/03/30/the-namespace-rabbit-hole/</guid>
       <description>I&amp;rsquo;ve been working on an R package for factor analysis visualization for a while now, and ran into an interesting problem. One function in FAtools is essentially a wrapper for several functions in the nFactors package, which plots and displays both graphical and non graphical scree test solutions. It&amp;rsquo;s a handy way for people to look a little more closely at the number of factors to extract (although, I would argue not enough).</description>
     </item>
     

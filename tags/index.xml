@@ -2,156 +2,156 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Data &amp; Science: A blog</title>
-    <link>/tags/</link>
+    <link>https://mattkcole.github.io/tags/</link>
     <description>Recent content in Tags on Data &amp; Science: A blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 21 Jan 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://mattkcole.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Announcement</title>
-      <link>/tags/announcement/</link>
+      <link>https://mattkcole.github.io/tags/announcement/</link>
       <pubDate>Sat, 21 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/announcement/</guid>
+      <guid>https://mattkcole.github.io/tags/announcement/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Backward Selection</title>
-      <link>/tags/backward-selection/</link>
+      <link>https://mattkcole.github.io/tags/backward-selection/</link>
       <pubDate>Sun, 22 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/backward-selection/</guid>
+      <guid>https://mattkcole.github.io/tags/backward-selection/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Baysian</title>
-      <link>/tags/baysian/</link>
+      <link>https://mattkcole.github.io/tags/baysian/</link>
       <pubDate>Wed, 27 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/baysian/</guid>
+      <guid>https://mattkcole.github.io/tags/baysian/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Data</title>
-      <link>/tags/data/</link>
+      <link>https://mattkcole.github.io/tags/data/</link>
       <pubDate>Sun, 02 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/data/</guid>
+      <guid>https://mattkcole.github.io/tags/data/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Forecasting</title>
-      <link>/tags/forecasting/</link>
+      <link>https://mattkcole.github.io/tags/forecasting/</link>
       <pubDate>Wed, 27 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/forecasting/</guid>
+      <guid>https://mattkcole.github.io/tags/forecasting/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Github</title>
-      <link>/tags/github/</link>
+      <link>https://mattkcole.github.io/tags/github/</link>
       <pubDate>Tue, 24 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/github/</guid>
+      <guid>https://mattkcole.github.io/tags/github/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Google Trends</title>
-      <link>/tags/google-trends/</link>
+      <link>https://mattkcole.github.io/tags/google-trends/</link>
       <pubDate>Wed, 27 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/google-trends/</guid>
+      <guid>https://mattkcole.github.io/tags/google-trends/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Jags</title>
-      <link>/tags/jags/</link>
+      <link>https://mattkcole.github.io/tags/jags/</link>
       <pubDate>Wed, 27 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/jags/</guid>
+      <guid>https://mattkcole.github.io/tags/jags/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Package</title>
-      <link>/tags/package/</link>
+      <link>https://mattkcole.github.io/tags/package/</link>
       <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/package/</guid>
+      <guid>https://mattkcole.github.io/tags/package/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Packages</title>
-      <link>/tags/packages/</link>
+      <link>https://mattkcole.github.io/tags/packages/</link>
       <pubDate>Thu, 30 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/packages/</guid>
+      <guid>https://mattkcole.github.io/tags/packages/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>/tags/r/</link>
+      <link>https://mattkcole.github.io/tags/r/</link>
       <pubDate>Tue, 24 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/r/</guid>
+      <guid>https://mattkcole.github.io/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R Packages</title>
-      <link>/tags/r-packages/</link>
+      <link>https://mattkcole.github.io/tags/r-packages/</link>
       <pubDate>Tue, 24 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/r-packages/</guid>
+      <guid>https://mattkcole.github.io/tags/r-packages/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Random</title>
-      <link>/tags/random/</link>
+      <link>https://mattkcole.github.io/tags/random/</link>
       <pubDate>Sat, 21 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/random/</guid>
+      <guid>https://mattkcole.github.io/tags/random/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Reproducibility</title>
-      <link>/tags/reproducibility/</link>
+      <link>https://mattkcole.github.io/tags/reproducibility/</link>
       <pubDate>Fri, 25 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/reproducibility/</guid>
+      <guid>https://mattkcole.github.io/tags/reproducibility/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Seed</title>
-      <link>/tags/seed/</link>
+      <link>https://mattkcole.github.io/tags/seed/</link>
       <pubDate>Fri, 25 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/seed/</guid>
+      <guid>https://mattkcole.github.io/tags/seed/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Statistics</title>
-      <link>/tags/statistics/</link>
+      <link>https://mattkcole.github.io/tags/statistics/</link>
       <pubDate>Sun, 22 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>/tags/statistics/</guid>
+      <guid>https://mattkcole.github.io/tags/statistics/</guid>
       <description></description>
     </item>
     
