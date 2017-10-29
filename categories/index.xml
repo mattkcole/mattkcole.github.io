@@ -2,57 +2,57 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Data &amp; Science: A blog</title>
-    <link>https://mattkcole.github.io/categories/</link>
+    <link>/categories/</link>
     <description>Recent content in Categories on Data &amp; Science: A blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 21 Jan 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://mattkcole.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Announcement</title>
-      <link>https://mattkcole.github.io/categories/announcement/</link>
+      <link>/categories/announcement/</link>
       <pubDate>Sat, 21 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://mattkcole.github.io/categories/announcement/</guid>
+      <guid>/categories/announcement/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Forecasting</title>
-      <link>https://mattkcole.github.io/categories/forecasting/</link>
+      <link>/categories/forecasting/</link>
       <pubDate>Wed, 27 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://mattkcole.github.io/categories/forecasting/</guid>
+      <guid>/categories/forecasting/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>https://mattkcole.github.io/categories/r/</link>
+      <link>/categories/r/</link>
       <pubDate>Wed, 27 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://mattkcole.github.io/categories/r/</guid>
+      <guid>/categories/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R Package</title>
-      <link>https://mattkcole.github.io/categories/r-package/</link>
+      <link>/categories/r-package/</link>
       <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://mattkcole.github.io/categories/r-package/</guid>
+      <guid>/categories/r-package/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Software Development</title>
-      <link>https://mattkcole.github.io/categories/software-development/</link>
+      <link>/categories/software-development/</link>
       <pubDate>Tue, 24 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://mattkcole.github.io/categories/software-development/</guid>
+      <guid>/categories/software-development/</guid>
       <description></description>
     </item>
     
