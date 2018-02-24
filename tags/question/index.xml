@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Question on Data &amp; Science: A blog</title>
+    <link>/tags/question/</link>
+    <description>Recent content in Question on Data &amp; Science: A blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 23 Feb 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/question/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cherry Blossoms</title>
+      <link>/2018/02/23/cherry/</link>
+      <pubDate>Fri, 23 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/02/23/cherry/</guid>
+      <description>I wonder when the cherry blossoms will strike?
+library(readr) library(dplyr) library(ggplot2) # https://www.epa.gov/sites/production/files/2016-08/cherry-blossoms_fig-1.csv set.seed(123) cherry = readr::read_csv(&amp;#39;../../data/cherry.csv&amp;#39;, skip = 6) cherry = cherry %&amp;gt;% rbind(c(2017,84,NA)) cherry %&amp;gt;% ggplot(aes(Year, `Yoshino peak bloom date`)) + geom_line() + geom_smooth() + ylab(&amp;#39;Yoshino peak bloom date (days after Jan 1)&amp;#39;) </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,8 +6,8 @@
 <meta name="generator" content="Hugo 0.36" />
 
 
-<title>About - Data &amp; Science: A blog</title>
-<meta property="og:title" content="About - Data &amp; Science: A blog">
+<title>Cherry Blossoms - Data &amp; Science: A blog</title>
+<meta property="og:title" content="Cherry Blossoms - Data &amp; Science: A blog">
 
 
 
@@ -16,6 +16,11 @@
 
 
 
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
 
 
 
@@ -52,19 +57,33 @@
 
   <article class="article">
     
+    <span class="article-duration">1 min read</span>
+    
 
-    <h1 class="article-title">About</h1>
+    <h1 class="article-title">Cherry Blossoms</h1>
 
+    
+    <span class="article-date">2018/02/23</span>
     
 
     <div class="article-content">
-      <p>Matt is a Data Scientist at Freddie Mac in the D.C. area.</p>
+      <p>I wonder when the cherry blossoms will strike?</p>
+<pre class="r"><code>library(readr)
+library(dplyr)
+library(ggplot2)
+# https://www.epa.gov/sites/production/files/2016-08/cherry-blossoms_fig-1.csv
 
-<p>Matt is a graduate of the <a href="https://www.jhsph.edu/">Johns Hopkins School of Public Health</a> <a href="http://www.jhsph.edu/departments/biostatistics/">biostatistics</a> department and <a href="http://www.sacredheart.edu/">Sacred Heart University&rsquo;s</a> Mathematics and Biological sciences departments.</p>
+set.seed(123)
 
-<p>He is interested in a bunch of things including tech, sustainability, and bikes.</p>
+cherry = readr::read_csv(&#39;../../data/cherry.csv&#39;, skip = 6) 
 
-<p>If you&rsquo;d like to talk to Matt for fun or because you have a use for him please email him <a href="mailto:matt@mattkcole.com">here</a> or reach out on <a href="https://twitter.com/mattcol3">social</a> <a href="https://www.linkedin.com/in/mattkcole/">media</a> - he&rsquo;d love to chat!</p>
+cherry = cherry %&gt;% rbind(c(2017,84,NA))
+
+cherry %&gt;% ggplot(aes(Year, `Yoshino peak bloom date`)) + 
+        geom_line() + 
+        geom_smooth() +
+        ylab(&#39;Yoshino peak bloom date (days after Jan 1)&#39;)</code></pre>
+<p><img src="/post/2018-02-11-cherry_files/figure-html/test-1.png" width="672" /></p>
 
     </div>
   </article>
@@ -109,6 +128,18 @@
 
     </div>
     
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
 
     
 
