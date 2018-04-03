@@ -8,6 +8,11 @@
   </url>
   
   <url>
+    <loc>/2018/02/23/python-in-blogdown/</loc>
+    <lastmod>2018-02-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/10/24/github_packages/</loc>
     <lastmod>2017-10-24T00:00:00+00:00</lastmod>
   </url>
@@ -142,6 +147,12 @@
   
   <url>
     <loc>/post/</loc>
+    <lastmod>2018-02-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/python/</loc>
     <lastmod>2018-02-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

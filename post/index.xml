@@ -22,6 +22,15 @@ library(readr) library(dplyr) library(ggplot2) # https://www.epa.gov/sites/produ
     </item>
     
     <item>
+      <title>Python in Blogdown</title>
+      <link>/2018/02/23/python-in-blogdown/</link>
+      <pubDate>Fri, 23 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/02/23/python-in-blogdown/</guid>
+      <description>import numpy as np import pandas as pd  So, as you may or may not know, this site is made with</description>
+    </item>
+    
+    <item>
       <title>Importing Functions From Github Into Your Package</title>
       <link>/2017/10/24/github_packages/</link>
       <pubDate>Tue, 24 Oct 2017 00:00:00 +0000</pubDate>
