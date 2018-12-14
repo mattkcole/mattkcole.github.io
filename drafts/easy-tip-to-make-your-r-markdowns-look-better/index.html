@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.36" />
+
+
+<title>Quick and Easy Tips to Present Numeric Data More Clearly in RMarkdown (And In General) - Data &amp; Science: A blog</title>
+<meta property="og:title" content="Quick and Easy Tips to Present Numeric Data More Clearly in RMarkdown (And In General) - Data &amp; Science: A blog">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/avatar-icon.JPG"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://twitter.com/mattcol3">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+
+    <h1 class="article-title">Quick and Easy Tips to Present Numeric Data More Clearly in RMarkdown (And In General)</h1>
+
+    
+
+    <div class="article-content">
+      <p>R Markdown is a truly amazing communication tool which allows statisticians, data scientists, and any other data-investigator the ability to integrate beautiful visualizations and Latex-like typesetting with the powerful R language. Despite (or perhaps, because of) its power, it’s sometimes easy to overlook some subtle ways to communicate more effectively in formatting, language choice, and data presentation.</p>
+<p>One common way I’ve seen many data scientists miss an opportunity to comminicate more clearly is with respect to the presentation of numeric data. These missteps commonly stem from not rounding properly, implying an incorrect level of precision, or the omission of a thoustands place delineator making it difficult to understand the value presented.</p>
+<div id="problem-1---not-rounding-properly" class="section level3">
+<h3>Problem 1 - Not rounding properly</h3>
+<p>If you’re reading this blog, I have no question you’re already aware of this - rounding is powerful. It can implicitly convey additional meaning behind numbers or obfuscate your intention. For example displaying the mean rent for a one bedroom apartment in Cedar Rapids, Iowa as $612.82523601 is not helpful. Including too many decimal places not only may suggest to some readers a level of precion we don’t have (’we know what the rent is down to one-millionth of a cent), it also doesn’t make sense given the unit of measure (when have you ever paid rent in less than a cent increment? less than a dollar increment? less than a ten-dollar increment?). At the same time, it wouldn’t be helpful to round to the nearest thousand and report the average rent as $1,000, in this case we are simply accidentally misreporting (or worse) this measure.</p>
+<p>In short, round responsibly, nobody wants to see your raw unfiltered numbers.</p>
+<div id="how-to-deal-with-this-in-rrmarkdown" class="section level4">
+<h4>How to deal with this in R/RMarkdown</h4>
+<pre class="r"><code>x = 612.82523601
+cat(&quot;We found the mean rent in Cedar Rapids, Iowa to be $&quot;, round(x), sep = &quot;&quot;)</code></pre>
+<pre><code>## We found the mean rent in Cedar Rapids, Iowa to be $613</code></pre>
+</div>
+</div>
+<div id="problem-2---not-including-thoustands-place-delineator" class="section level3">
+<h3>Problem 2 - Not including thoustands place delineator</h3>
+<p>Even when we are rounding, our numberic data is not necesarilly comminicating well. A common issue I’ve seen is lack of thoustands place delineators. When looking at many large (larger than 1,000) numbers, this delineator becomes incredibly important to quickly interpret the digits, especailly when in the context of other numberics which may be of different lengths.</p>
+<div id="in-r" class="section level4">
+<h4>In R</h4>
+<p>Recently, I came across the base R function <code>prettyNum</code> which has some really cool functionaluty. It can control significant digits, numeric width, and all sorts of formatting. I mostly use the function’s <code>big.mark</code> argument to add thoustands place delineators.</p>
+<pre class="r"><code>avg_family_income = 103754
+cat(&quot;The median household income in Fairfield, CT was $&quot;, 
+       prettyNum(avg_family_income, big.mark = &#39;,&#39;), 
+       &#39; in 2010.&#39;, sep = &quot;&quot;)</code></pre>
+<pre><code>## The median household income in Fairfield, CT was $103,754 in 2010.</code></pre>
+<p>Look at that!</p>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+<section id="comments">
+  <div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+  
+  };
+  (function() {
+    var inIFrame = function() {
+      var iframe = true;
+      try { iframe = window.self !== window.top; } catch (e) {}
+      return iframe;
+    };
+    if (inIFrame()) return;
+    var d = document, s = d.createElement('script');
+    s.src = '//mattkcole-com.disqus.com/embed.js'; s.async = true;
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58198392-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
+

@@ -6,10 +6,20 @@
     <description>Recent content on Data &amp; Science: A blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Feb 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Dec 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Quick and Easy Tips to Present Numeric Data More Clearly in RMarkdown (And In General)</title>
+      <link>/drafts/easy-tip-to-make-your-r-markdowns-look-better/</link>
+      <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/drafts/easy-tip-to-make-your-r-markdowns-look-better/</guid>
+      <description>R Markdown is a truly amazing communication tool which allows statisticians, data scientists, and any other data-investigator the ability to integrate beautiful visualizations and Latex-like typesetting with the powerful R language. Despite (or perhaps, because of) its power, it’s sometimes easy to overlook some subtle ways to communicate more effectively in formatting, language choice, and data presentation.
+One common way I’ve seen many data scientists miss an opportunity to comminicate more clearly is with respect to the presentation of numeric data.</description>
+    </item>
     
     <item>
       <title>Cherry Blossoms</title>
