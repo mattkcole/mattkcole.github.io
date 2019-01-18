@@ -75,6 +75,15 @@
     </item>
     
     <item>
+      <title>Graphs</title>
+      <link>/tags/graphs/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/graphs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Jags</title>
       <link>/tags/jags/</link>
       <pubDate>Wed, 27 Sep 2017 00:00:00 +0000</pubDate>
@@ -102,6 +111,15 @@
     </item>
     
     <item>
+      <title>Pie Charts</title>
+      <link>/tags/pie-charts/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/pie-charts/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Question</title>
       <link>/tags/question/</link>
       <pubDate>Fri, 23 Feb 2018 00:00:00 +0000</pubDate>
@@ -113,7 +131,7 @@
     <item>
       <title>R</title>
       <link>/tags/r/</link>
-      <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/r/</guid>
       <description></description>
@@ -156,11 +174,29 @@
     </item>
     
     <item>
+      <title>Shiny</title>
+      <link>/tags/shiny/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/shiny/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Statistics</title>
       <link>/tags/statistics/</link>
       <pubDate>Sun, 22 Jan 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/statistics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Visualization</title>
+      <link>/tags/visualization/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/visualization/</guid>
       <description></description>
     </item>
     

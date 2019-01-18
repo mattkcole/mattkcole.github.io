@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2019/01/17/pie-charts-what-s-the-big-deal/</loc>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/drafts/easy-tip-to-make-your-r-markdowns-look-better/</loc>
     <lastmod>2018-12-13T00:00:00+00:00</lastmod>
   </url>
@@ -99,7 +104,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2018-12-13T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -134,6 +139,12 @@
   </url>
   
   <url>
+    <loc>/tags/graphs/</loc>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/jags/</loc>
     <lastmod>2017-09-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -152,8 +163,14 @@
   </url>
   
   <url>
+    <loc>/tags/pie-charts/</loc>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/post/</loc>
-    <lastmod>2018-02-23T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -165,7 +182,7 @@
   
   <url>
     <loc>/tags/r/</loc>
-    <lastmod>2018-12-13T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -218,6 +235,12 @@
   </url>
   
   <url>
+    <loc>/tags/shiny/</loc>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/software-development/</loc>
     <lastmod>2017-10-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -232,6 +255,18 @@
   <url>
     <loc>/tags/</loc>
     <lastmod>2017-01-21T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/visualization/</loc>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/visualization/</loc>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
