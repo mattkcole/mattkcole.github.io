@@ -21,16 +21,6 @@
     </item>
     
     <item>
-      <title>Common Ways to Spruce up ggplot2 visuals</title>
-      <link>/drafts/common-ways-to-spruce-up-ggplot2-visuals/</link>
-      <pubDate>Sun, 15 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/drafts/common-ways-to-spruce-up-ggplot2-visuals/</guid>
-      <description>I am making this post to serve as a collection of functions and usecases in order to save time googling around for them when I need them in a pinch.
-Use the scales package to better format your axis library(tidyverse) ## ── Attaching packages ─────────────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 3.1.0 ✔ purrr 0.2.5 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.8 ## ✔ tidyr 0.8.2 ✔ stringr 1.3.1 ## ✔ readr 1.</description>
-    </item>
-    
-    <item>
       <title>Pie Charts - What’s the big deal?</title>
       <link>/2019/01/17/pie-charts-what-s-the-big-deal/</link>
       <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
@@ -38,16 +28,6 @@ Use the scales package to better format your axis library(tidyverse) ## ── A
       <guid>/2019/01/17/pie-charts-what-s-the-big-deal/</guid>
       <description>In data visualization there are many unspoken rules which are ‘understood’ to be correct. Don’t plot in 3-D, don’t display column/bar charts on a logarithmic scale, don’t use two y-axes (or dare I say - more than two), and never never ever use pie charts. Yet pie charts remain common, especially in business, and some in the statistical/data science community just absolutely love to hate them.
 Don’t just take my word for it, even the help function in base R for pie charts (?</description>
-    </item>
-    
-    <item>
-      <title>Quick and Easy Tips to Present Numeric Data More Clearly in RMarkdown (And In General)</title>
-      <link>/drafts/easy-tip-to-make-your-r-markdowns-look-better/</link>
-      <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/drafts/easy-tip-to-make-your-r-markdowns-look-better/</guid>
-      <description>R Markdown is a truly amazing communication tool which allows statisticians, data scientists, and any other data-investigator the ability to integrate beautiful visualizations and Latex-like typesetting with the powerful R language. Despite (or perhaps, because of) its power, it’s sometimes easy to overlook some subtle ways to communicate more effectively in formatting, language choice, and data presentation.
-One common way I’ve seen many data scientists miss an opportunity to comminicate more clearly is with respect to the presentation of numeric data.</description>
     </item>
     
     <item>

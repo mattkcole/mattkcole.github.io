@@ -8,18 +8,8 @@
   </url>
   
   <url>
-    <loc>/drafts/common-ways-to-spruce-up-ggplot2-visuals/</loc>
-    <lastmod>2019-12-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/2019/01/17/pie-charts-what-s-the-big-deal/</loc>
     <lastmod>2019-01-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/drafts/easy-tip-to-make-your-r-markdowns-look-better/</loc>
-    <lastmod>2018-12-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -129,12 +119,6 @@
   </url>
   
   <url>
-    <loc>/drafts/</loc>
-    <lastmod>2019-12-15T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/forecasting/</loc>
     <lastmod>2017-09-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -143,12 +127,6 @@
   <url>
     <loc>/categories/forecasting/</loc>
     <lastmod>2017-09-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/ggplot2/</loc>
-    <lastmod>2019-12-15T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -214,7 +192,7 @@
   
   <url>
     <loc>/tags/r/</loc>
-    <lastmod>2019-12-15T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -245,12 +223,6 @@
   <url>
     <loc>/categories/random_thoughts/</loc>
     <lastmod>2018-02-23T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/reporting/</loc>
-    <lastmod>2018-12-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -298,7 +270,7 @@
   
   <url>
     <loc>/categories/visualization/</loc>
-    <lastmod>2019-12-15T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
