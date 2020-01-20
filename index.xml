@@ -6,17 +6,17 @@
     <description>Recent content on Data &amp; Science: A blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hacking together my first web app in Django</title>
-      <link>/2020/01/21/hacking-together-my-first-web-app-django/</link>
-      <pubDate>Tue, 21 Jan 2020 00:00:00 +0000</pubDate>
+      <link>/2020/01/20/hacking-together-my-first-web-app-django/</link>
+      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/01/21/hacking-together-my-first-web-app-django/</guid>
+      <guid>/2020/01/20/hacking-together-my-first-web-app-django/</guid>
       <description>Background A few months ago I started my journey to build my first web app, Rental Tensor (excuse the horrible name 😎) in order to estimate the rents for different properties at the zip code level. As a trained statistician disguised as a techy Data Scientist, I love playing with a mix of code and data, but I feel that it can sometimes be difficult for models or data pipelines to be very valuable without some sort of web backbone to host and serve it.</description>
     </item>
     
