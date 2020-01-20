@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Visualization on Data &amp; Science: A blog</title>
-    <link>/categories/visualization/</link>
-    <description>Recent content in Visualization on Data &amp; Science: A blog</description>
+    <title>Ggplot2 on Data &amp; Science: A blog</title>
+    <link>/tags/ggplot2/</link>
+    <description>Recent content in Ggplot2 on Data &amp; Science: A blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 15 Dec 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/categories/visualization/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,16 +19,6 @@
       <guid>/drafts/common-ways-to-spruce-up-ggplot2-visuals/</guid>
       <description>I am making this post to serve as a collection of functions and usecases in order to save time googling around for them when I need them in a pinch.
 Use the scales package to better format your axis library(tidyverse) ## ── Attaching packages ─────────────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 3.1.0 ✔ purrr 0.2.5 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.8 ## ✔ tidyr 0.8.2 ✔ stringr 1.3.1 ## ✔ readr 1.</description>
-    </item>
-    
-    <item>
-      <title>Pie Charts - What’s the big deal?</title>
-      <link>/2019/01/17/pie-charts-what-s-the-big-deal/</link>
-      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/2019/01/17/pie-charts-what-s-the-big-deal/</guid>
-      <description>In data visualization there are many unspoken rules which are ‘understood’ to be correct. Don’t plot in 3-D, don’t display column/bar charts on a logarithmic scale, don’t use two y-axes (or dare I say - more than two), and never never ever use pie charts. Yet pie charts remain common, especially in business, and some in the statistical/data science community just absolutely love to hate them.
-Don’t just take my word for it, even the help function in base R for pie charts (?</description>
     </item>
     
   </channel>

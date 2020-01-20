@@ -6,10 +6,20 @@
     <description>Recent content in Drafts on Data &amp; Science: A blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 Dec 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/drafts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Common Ways to Spruce up ggplot2 visuals</title>
+      <link>/drafts/common-ways-to-spruce-up-ggplot2-visuals/</link>
+      <pubDate>Sun, 15 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/drafts/common-ways-to-spruce-up-ggplot2-visuals/</guid>
+      <description>I am making this post to serve as a collection of functions and usecases in order to save time googling around for them when I need them in a pinch.
+Use the scales package to better format your axis library(tidyverse) ## ── Attaching packages ─────────────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 3.1.0 ✔ purrr 0.2.5 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.8 ## ✔ tidyr 0.8.2 ✔ stringr 1.3.1 ## ✔ readr 1.</description>
+    </item>
     
     <item>
       <title>Quick and Easy Tips to Present Numeric Data More Clearly in RMarkdown (And In General)</title>

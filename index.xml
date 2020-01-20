@@ -6,10 +6,29 @@
     <description>Recent content on Data &amp; Science: A blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hacking together my first web app in Django</title>
+      <link>/2020/01/21/hacking-together-my-first-web-app-django/</link>
+      <pubDate>Tue, 21 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/01/21/hacking-together-my-first-web-app-django/</guid>
+      <description>Background A few months ago I started my journey to build my first web app, Rental Tensor (excuse the horrible name 😎) in order to estimate the rents for different properties at the zip code level. As a trained statistician disguised as a techy Data Scientist, I love playing with a mix of code and data, but I feel that it can sometimes be difficult for models or data pipelines to be very valuable without some sort of web backbone to host and serve it.</description>
+    </item>
+    
+    <item>
+      <title>Common Ways to Spruce up ggplot2 visuals</title>
+      <link>/drafts/common-ways-to-spruce-up-ggplot2-visuals/</link>
+      <pubDate>Sun, 15 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/drafts/common-ways-to-spruce-up-ggplot2-visuals/</guid>
+      <description>I am making this post to serve as a collection of functions and usecases in order to save time googling around for them when I need them in a pinch.
+Use the scales package to better format your axis library(tidyverse) ## ── Attaching packages ─────────────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 3.1.0 ✔ purrr 0.2.5 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.8 ## ✔ tidyr 0.8.2 ✔ stringr 1.3.1 ## ✔ readr 1.</description>
+    </item>
     
     <item>
       <title>Pie Charts - What’s the big deal?</title>
@@ -124,10 +143,19 @@ Whenever we consider estimating the relationship between two variables, say \(x\
       <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
       
       <guid>/about/</guid>
-      <description>Matt is a Data Scientist at Freddie Mac in the D.C. area.
-Matt is a graduate of the Johns Hopkins School of Public Health biostatistics department and Sacred Heart University&amp;rsquo;s Mathematics and Biological sciences departments.
-He is interested in a bunch of things including tech, sustainability, and bikes.
+      <description>Matt is a Data Scientist at Gartner Digital Markets in the D.C. area. He perviously worked on collateral modeling at Freddie Mac.
+Matt is a graduate of the Johns Hopkins School of Public Health Biostatistics department and Sacred Heart University&amp;rsquo;s Mathematics and Biological sciences departments.
+He is interested in a bunch of things including tech, sustainability, land use, and bikes.
 If you&amp;rsquo;d like to talk to Matt for fun or because you have a use for him please email him here or reach out on social media - he&amp;rsquo;d love to chat!</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>Hacking together my first web app - Rental Tensor       code{white-space: pre;} pre:not([class]) { background-color: white; }  if (window.hljs) { hljs.configure({languages: []}); hljs.initHighlightingOnLoad(); if (document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); } }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
     </item>
     
     <item>
