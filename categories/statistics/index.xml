@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Statistics on Data &amp; Science: A blog</title>
+    <link>/categories/statistics/</link>
+    <description>Recent content in Statistics on Data &amp; Science: A blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 20 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/statistics/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>So, you tested positive for COVID-19 - Do you actually have the virus?</title>
+      <link>/2020/04/20/so-you-tested-positive-for-covid-19-do-you-actually-have-the-virus/</link>
+      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/04/20/so-you-tested-positive-for-covid-19-do-you-actually-have-the-virus/</guid>
+      <description>Testing positive for the Coronavirus doesn’t mean one actually has a SARS-CoV-2 infection. Like statistical models, one might say that all medical tests are flawed*, but some (hopefully all that we make decisions based off of) are useful. While creating these tests, scientists balance cost (in many ways), speed, generalizability, and of course, accuracy. Most of the time, in the case of a binary test (ex. you are pregnant or you are not, etc.</description>
+    </item>
+    
+  </channel>
+</rss>

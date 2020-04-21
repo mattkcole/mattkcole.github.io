@@ -30,6 +30,15 @@
     </item>
     
     <item>
+      <title>Bayes</title>
+      <link>/tags/bayes/</link>
+      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/bayes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Baysian</title>
       <link>/tags/baysian/</link>
       <pubDate>Wed, 27 Sep 2017 00:00:00 +0000</pubDate>
@@ -44,6 +53,24 @@
       <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>/tags/building/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Coronavirus</title>
+      <link>/tags/coronavirus/</link>
+      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/coronavirus/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Covid19</title>
+      <link>/tags/covid19/</link>
+      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/covid19/</guid>
       <description></description>
     </item>
     
@@ -134,6 +161,15 @@
       <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/pie-charts/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Public Health</title>
+      <link>/tags/public-health/</link>
+      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/public-health/</guid>
       <description></description>
     </item>
     
