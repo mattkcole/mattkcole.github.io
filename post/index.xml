@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Data &amp; Science: A blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Dplyr’s select - tips and tricks</title>
+      <link>/2020/05/20/dplyr-s-select-tips-and-tricks/</link>
+      <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/05/20/dplyr-s-select-tips-and-tricks/</guid>
+      <description>It’s not the most interesting function, or even that much fun. But dplyr’s select has a lot of functionality that is often overlooked. All select does is ‘select’ columns, yet understanding some of its functionality deeper than surface level saves me a bunch of time in my day-to-day work. Let’s take a tour of where dplyr::select can save you time too, by calling out situations where I find myself using the function over and over again.</description>
+    </item>
     
     <item>
       <title>So, you tested positive for COVID-19 - Do you actually have the virus?</title>

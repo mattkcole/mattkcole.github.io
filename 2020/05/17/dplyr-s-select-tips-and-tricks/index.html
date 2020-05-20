@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.36" />
+
+
+<title>Dplyr’s select - tips and tricks - Data &amp; Science: A blog</title>
+<meta property="og:title" content="Dplyr’s select - tips and tricks - Data &amp; Science: A blog">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/avatar-icon.JPG"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://twitter.com/mattcol3">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">5 min read</span>
+    
+
+    <h1 class="article-title">Dplyr’s select - tips and tricks</h1>
+
+    
+    <span class="article-date">2020/05/17</span>
+    
+
+    <div class="article-content">
+      <p>It’s not the most interesting function, or even that much fun. But dplyr’s <code>select</code> has a lot of functionality that is often overlooked by those using it. All <code>select</code> does is ‘select’ columns, yet understanding some of its functionality below surface level saves me a bunch of time in my day-to-day work. Let’s take a tour of where <code>dplyr::select</code> can save you time too, by calling out situations where I find myself using the function over and over again.</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<p>Let’s imagine we are working with the following data frame.</p>
+<pre class="r"><code>x = tibble(id = 1:100,
+           category1 = rep(c(rep(&#39;a&#39;,10), rep(&#39;b&#39;,10)),5),
+           category2 = base::sample(x=c(&#39;red&#39;,&#39;green&#39;,&#39;blue&#39;),replace = T, size = 100),
+           value1 = round(runif(100),2),
+           value2 = round(rnorm(100,mean = 1),2),
+           value3 = round(rnorm(100,mean = 2),2),
+           value4 = round(rnorm(100,mean = 3),2),
+           value5 = round(rnorm(100,mean = 4),2),
+           value6 = round(rnorm(100,mean = 5),2))
+x %&gt;% head() %&gt;% knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="left">category1</th>
+<th align="left">category2</th>
+<th align="right">value1</th>
+<th align="right">value2</th>
+<th align="right">value3</th>
+<th align="right">value4</th>
+<th align="right">value5</th>
+<th align="right">value6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">a</td>
+<td align="left">red</td>
+<td align="right">0.92</td>
+<td align="right">1.86</td>
+<td align="right">1.41</td>
+<td align="right">3.15</td>
+<td align="right">3.92</td>
+<td align="right">3.32</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">a</td>
+<td align="left">red</td>
+<td align="right">0.12</td>
+<td align="right">0.43</td>
+<td align="right">2.10</td>
+<td align="right">3.70</td>
+<td align="right">3.46</td>
+<td align="right">5.05</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="left">a</td>
+<td align="left">blue</td>
+<td align="right">0.18</td>
+<td align="right">1.39</td>
+<td align="right">1.40</td>
+<td align="right">3.67</td>
+<td align="right">3.91</td>
+<td align="right">3.83</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="left">a</td>
+<td align="left">red</td>
+<td align="right">0.56</td>
+<td align="right">3.07</td>
+<td align="right">2.39</td>
+<td align="right">1.95</td>
+<td align="right">3.52</td>
+<td align="right">6.42</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="left">a</td>
+<td align="left">green</td>
+<td align="right">0.44</td>
+<td align="right">1.01</td>
+<td align="right">0.95</td>
+<td align="right">3.22</td>
+<td align="right">2.41</td>
+<td align="right">2.74</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="left">a</td>
+<td align="left">red</td>
+<td align="right">0.10</td>
+<td align="right">1.58</td>
+<td align="right">3.60</td>
+<td align="right">3.20</td>
+<td align="right">6.48</td>
+<td align="right">5.65</td>
+</tr>
+</tbody>
+</table>
+<div id="we-can-imagine-situations-where-we-want-to-only-grab-a-specific-column-or-two-in-a-tidy-fashion---dplyrselect-is-literally-made-for-that" class="section level4">
+<h4>We can imagine situations where we want to only grab a specific column or two in a tidy fashion - <code>dplyr::select</code> is literally made for that!</h4>
+<pre class="r"><code>x %&gt;%
+        select(id, value2)</code></pre>
+<pre><code>## # A tibble: 100 x 2
+##       id value2
+##    &lt;int&gt;  &lt;dbl&gt;
+##  1     1   1.86
+##  2     2   0.43
+##  3     3   1.39
+##  4     4   3.07
+##  5     5   1.01
+##  6     6   1.58
+##  7     7   2.67
+##  8     8   1.08
+##  9     9   1.59
+## 10    10   1.64
+## # ... with 90 more rows</code></pre>
+</div>
+<div id="now-what-if-we-want-to-remove-a-column" class="section level4">
+<h4>Now, what if we want to remove a column?</h4>
+<pre class="r"><code>x %&gt;%
+        select(-id)</code></pre>
+<pre><code>## # A tibble: 100 x 8
+##    category1 category2 value1 value2 value3 value4 value5 value6
+##    &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 a         red         0.92   1.86   1.41   3.15   3.92   3.32
+##  2 a         red         0.12   0.43   2.1    3.7    3.46   5.05
+##  3 a         blue        0.18   1.39   1.4    3.67   3.91   3.83
+##  4 a         red         0.56   3.07   2.39   1.95   3.52   6.42
+##  5 a         green       0.44   1.01   0.95   3.22   2.41   2.74
+##  6 a         red         0.1    1.58   3.6    3.2    6.48   5.65
+##  7 a         green       0.34   2.67   1.69   2.73   4.12   4.97
+##  8 a         green       0.16   1.08   1.37   2.68   5.14   4.92
+##  9 a         blue        0.37   1.59   2.31   2.99   5.4    4.51
+## 10 a         green       0.64   1.64   1.94   4.77   4.54   4.67
+## # ... with 90 more rows</code></pre>
+<p>That’s right, you can simply drop columns by adding a <code>-</code> to the column name.</p>
+</div>
+<div id="what-about-renaming-a-column" class="section level4">
+<h4>What about renaming a column?</h4>
+<pre class="r"><code>x %&gt;%
+        select(color = category2)</code></pre>
+<pre><code>## # A tibble: 100 x 1
+##    color
+##    &lt;chr&gt;
+##  1 red  
+##  2 red  
+##  3 blue 
+##  4 red  
+##  5 green
+##  6 red  
+##  7 green
+##  8 green
+##  9 blue 
+## 10 green
+## # ... with 90 more rows</code></pre>
+<p>This is a handy alternative to using <code>dplyr::rename</code>.</p>
+</div>
+<div id="ok-but-what-if-we-want-to-rename-a-column-and-grab-every-other-column-except-for-one" class="section level4">
+<h4>Ok, but what if we want to rename a column, and grab every other column except for one?</h4>
+<pre class="r"><code>x %&gt;%
+        select(color = category2, everything(), -id)</code></pre>
+<pre><code>## # A tibble: 100 x 8
+##    color category1 value1 value2 value3 value4 value5 value6
+##    &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 red   a           0.92   1.86   1.41   3.15   3.92   3.32
+##  2 red   a           0.12   0.43   2.1    3.7    3.46   5.05
+##  3 blue  a           0.18   1.39   1.4    3.67   3.91   3.83
+##  4 red   a           0.56   3.07   2.39   1.95   3.52   6.42
+##  5 green a           0.44   1.01   0.95   3.22   2.41   2.74
+##  6 red   a           0.1    1.58   3.6    3.2    6.48   5.65
+##  7 green a           0.34   2.67   1.69   2.73   4.12   4.97
+##  8 green a           0.16   1.08   1.37   2.68   5.14   4.92
+##  9 blue  a           0.37   1.59   2.31   2.99   5.4    4.51
+## 10 green a           0.64   1.64   1.94   4.77   4.54   4.67
+## # ... with 90 more rows</code></pre>
+<p>I think of <code>dplyr::everything</code> (actually from the <code>tidyselect</code> package) as analogous to <code>SELECT *</code> in SQL.</p>
+</div>
+<div id="well-what-if-we-want-to-grab-all-of-our-value-columns" class="section level4">
+<h4>Well, what if we want to grab all of our ‘value’ columns?</h4>
+<pre class="r"><code>x %&gt;%
+        select(starts_with(&#39;value&#39;))</code></pre>
+<pre><code>## # A tibble: 100 x 6
+##    value1 value2 value3 value4 value5 value6
+##     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1   0.92   1.86   1.41   3.15   3.92   3.32
+##  2   0.12   0.43   2.1    3.7    3.46   5.05
+##  3   0.18   1.39   1.4    3.67   3.91   3.83
+##  4   0.56   3.07   2.39   1.95   3.52   6.42
+##  5   0.44   1.01   0.95   3.22   2.41   2.74
+##  6   0.1    1.58   3.6    3.2    6.48   5.65
+##  7   0.34   2.67   1.69   2.73   4.12   4.97
+##  8   0.16   1.08   1.37   2.68   5.14   4.92
+##  9   0.37   1.59   2.31   2.99   5.4    4.51
+## 10   0.64   1.64   1.94   4.77   4.54   4.67
+## # ... with 90 more rows</code></pre>
+<p>This is particularly handy for selections after <a href="https://tidyr.tidyverse.org/articles/pivot.html">pivoting wider</a> where we may have many columns that have a certian prefix. See also <code>dplyr::one_of</code>.</p>
+</div>
+<div id="well-what-if-we-only-want-a-few-value-columns" class="section level4">
+<h4>Well what if we only want a few value columns?</h4>
+<p>Say, 1-4?</p>
+<pre class="r"><code>x %&gt;%
+        select(num_range(prefix = &#39;value&#39;, range = 1:4))</code></pre>
+<pre><code>## # A tibble: 100 x 4
+##    value1 value2 value3 value4
+##     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1   0.92   1.86   1.41   3.15
+##  2   0.12   0.43   2.1    3.7 
+##  3   0.18   1.39   1.4    3.67
+##  4   0.56   3.07   2.39   1.95
+##  5   0.44   1.01   0.95   3.22
+##  6   0.1    1.58   3.6    3.2 
+##  7   0.34   2.67   1.69   2.73
+##  8   0.16   1.08   1.37   2.68
+##  9   0.37   1.59   2.31   2.99
+## 10   0.64   1.64   1.94   4.77
+## # ... with 90 more rows</code></pre>
+<p>Also see <code>dplyr::contains</code> for more ways to select vased on matching a literal string.</p>
+</div>
+
+    </div>
+  </article>
+
+  
+<section id="comments">
+  <div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+  
+  };
+  (function() {
+    var inIFrame = function() {
+      var iframe = true;
+      try { iframe = window.self !== window.top; } catch (e) {}
+      return iframe;
+    };
+    if (inIFrame()) return;
+    var d = document, s = d.createElement('script');
+    s.src = '//mattkcole-com.disqus.com/embed.js'; s.async = true;
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58198392-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
+
