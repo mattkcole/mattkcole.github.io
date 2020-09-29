@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.36" />
+
+
+<title>More with Less - How Data Augmentation Can Boost Model Performance - Data &amp; Science: A blog</title>
+<meta property="og:title" content="More with Less - How Data Augmentation Can Boost Model Performance - Data &amp; Science: A blog">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/avatar-icon.JPG"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://twitter.com/mattcol3">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">6 min read</span>
+    
+
+    <h1 class="article-title">More with Less - How Data Augmentation Can Boost Model Performance</h1>
+
+    
+    <span class="article-date">2020/09/27</span>
+    
+
+    <div class="article-content">
+      
+
+<p>You may have heard that deep learning, particularly within image recognition situations, requires huge amounts of data. Mathematically, a ‘small’ <a href="https://en.wikipedia.org/wiki/Residual_neural_network">ResNet-18</a> model has millions of trainable parameters, and as everyone knows from statistics class - we need more training data than model parameters, right?* While it remains true that, all else equal, the more data a model has access to in training the better it will perform - there are a few tricks we can use to increase the mileage of the data which we do have. As with life and deep learning, a greater exposure to different varieties and experiences helps us become better connoisseurs of those things. However, acquiring a large quantity (experiences) of labeled data with a sufficient diversity (varieties) is difficult, time consuming, and can even be expensive. If only we could generate more data from, well, the data we already had - our lives would be much easier.</p>
+
+<h3 id="enter-data-augmentation">Enter, data augmentation.</h3>
+
+<p>Data Augmentation is the subtle altering of images (or more generally - data) prior to being fed to our model. This relatively simple procedure&rsquo;s objective is to manipulate the data being ingested by the model in such a way that the model will generalize better - ultimately requiring less data for similar levels of performance (another way of saying better performance with the same amount of data).</p>
+
+<p>Let’s see some data augmentation in action within a Tex-Mex food classification example using the super fun Fast.ai library.</p>
+
+<pre><code class="language-python">from fastai.vision.all import *
+</code></pre>
+
+<h3 id="setting-the-scene">Setting the scene:</h3>
+
+<p>Let&rsquo;s imagine ourselves as the chief developer for Silicon Valley&rsquo;s hottest new food start up Next-Mex, which we pitch to investors as &lsquo;kind of like Yelp - except only for Mexican food&rsquo;. Our goal here is to be able to classify photos uploaded to the app/site as a particular type of Mexican food. Eventually we hope to identify trends within American&rsquo;s collective tex-mex palate and sell that data to Taco Bell for millions.</p>
+
+<h3 id="the-data">The data</h3>
+
+<p>Well, the best thing to do here would be to get real images uploaded by the users of our site and classify them &lsquo;by hand&rsquo; to create a training set for our Deep Learning model. Except we haven&rsquo;t launched yet (sorry <a href="http://www.paulgraham.com/13sentences.html">pg</a>)&hellip;</p>
+
+<p>Instead we grab some examples of several classic Tex-Mex foods from the Bing Image Search API. We have 150 examples of chimichangas, burritos, tacos, fajitas, and quesadillas respectively.</p>
+
+<p>We can see 10 random examples of the data below.</p>
+
+<pre><code class="language-python">path = Path('mexican_foods')
+</code></pre>
+
+<pre><code class="language-python">foods = DataBlock(
+    blocks=(ImageBlock, CategoryBlock), 
+    get_items=get_image_files, 
+    splitter=RandomSplitter(valid_pct=0.2, seed=42),
+    get_y=parent_label,
+    item_tfms=Resize(128))
+dls = foods.dataloaders(path)
+</code></pre>
+
+<pre><code class="language-python">dls = foods.dataloaders(path)
+</code></pre>
+
+<pre><code class="language-python">dls.valid.show_batch(max_n=10, nrows=2)
+</code></pre>
+
+<p><img src="/post/2020-09-27-more-with-less-how-data-augmentation-can-boost-model-performance/output_6_0.png" alt="png" /></p>
+
+<p>Let&rsquo;s look at one example in particular - an image of a quesadilla (resized to 128 px).</p>
+
+<pre><code class="language-python">foods_no_data_aug = DataBlock(
+    blocks=(ImageBlock, CategoryBlock), 
+    get_items=get_image_files, 
+    splitter=RandomSplitter(valid_pct=0.2, seed=42),
+    get_y=parent_label,
+    item_tfms=Resize(128))
+dls_no_data_aug = foods_no_data_aug.dataloaders(path)
+foods_no_data_aug = foods_no_data_aug.new(item_tfms=Resize(128))
+dls_no_data_aug = foods_no_data_aug.dataloaders(path)
+dls_no_data_aug.train.show_batch(max_n=1, nrows=1, unique=True)
+</code></pre>
+
+<p><img src="/post/2020-09-27-more-with-less-how-data-augmentation-can-boost-model-performance/output_8_0.png" alt="png" /></p>
+
+<h3 id="next-steps">Next steps:</h3>
+
+<p>What types of data augmentation would be useful here depends on the nature of the data (pictures of Mexican foods scooped up from Bing) and the purpose of the model (classifying user images of Mexican foods at Mexican restaurants).</p>
+
+<p>We can imagine that users submitting pictures to Yelp may take photos at a variety of angles (some close, some far, some really zoomed in, etc.). In addition, the orientation of the photos horizontally (mirrored) doesn&rsquo;t matter, while we can probably assume that the users will probably not. We could also imagine that the pictures grabbed from Bing may include professionally done photographs taken with a steady hand (good lighting, no blur, proper angles, food is dead center, etc). These traits may not (let&rsquo;s be real - will not)  Fast.ai (the deep learning library I am using here) has a convenient function to do many data augmentation tasks aptly named <code>aug_transforms</code> which we will be using here.</p>
+
+<pre><code class="language-python">foods_regular_transform = DataBlock(
+    blocks=(ImageBlock, CategoryBlock), 
+    get_items=get_image_files, 
+    splitter=RandomSplitter(valid_pct=0.2, seed=42),
+    get_y=parent_label,
+    item_tfms=Resize(128))
+dls = foods_regular_transform.dataloaders(path)
+foods_regular_transform = foods_regular_transform.new(item_tfms=Resize(128), 
+                  batch_tfms=aug_transforms(mult=1.0, 
+                                            do_flip=True, 
+                                            flip_vert=False,
+                                            max_rotate=45.0, 
+                                            min_zoom=1.0, 
+                                            max_zoom=1.0, 
+                                            max_lighting=0, 
+                                            max_warp=0, 
+                                            p_affine=0.99, 
+                                            p_lighting=1, 
+                                            xtra_tfms=None, 
+                                            size=None, 
+                                            mode='bilinear', 
+                                            pad_mode='reflection', 
+                                            align_corners=True, 
+                                            batch=False, 
+                                            min_scale=1.0))
+dls = foods_regular_transform.dataloaders(path)
+dls.train.show_batch(max_n=5, nrows=1, unique=True)
+</code></pre>
+
+<p><img src="/post/2020-09-27-more-with-less-how-data-augmentation-can-boost-model-performance/output_10_0.png" alt="png" /></p>
+
+<p>Now, on each Epoch the data loader will pass on a random &lsquo;version&rsquo; of this image that will be rotated randomly up to 45 degrees and will have a 50% probability of being rotated along the vertical axis.</p>
+
+<p>Our model will now be trained on non-perfect images which will help it classify foods based on characteristics of the foods themselves rather than non-loyal artifacts of the training data. To conceptualize this we can imagine a car make and model classifier.</p>
+
+<p>If a lot of Prius&rsquo; were shown perpendicular our model may &lsquo;learn&rsquo; that all (or most) images with strong, prominent horizontal edges are actually a Prius. This is an artifact of the data, not of the actual thing (Prius) that we are trying to model.
+<img src="/post/2020-09-27-more-with-less-how-data-augmentation-can-boost-model-performance/car.jpeg" alt="Perpendicular Car" /></p>
+
+<h3 id="more-augmentation">More augmentation</h3>
+
+<p>There are of course, many other types of data augmentation. In fact, nearly anything you can think of (adding green hues, increasing image distortion, making darker, removing portions of the image etc.) can be a valid approach to data augmentation in the correct setting.</p>
+
+<p>In this case, we will add some perspective warping (arg: <code>max_warp</code>), mirroring (arg <code>do_flip</code>), rotating (arg: <code>max_rotate</code>), zooming in (args: <code>in_zoom</code> + <code>max_zoom</code>) which are all conveniently options in the incredibly useful <code>aug_transforms</code> function. We can set <code>mult</code> &gt; 1 for exaggerated effects so we can see the results more easily (note: too much augmentation could in fact be detrimental as the images can become cartoonish and not represent the actual images which we will be conducing inference on).</p>
+
+<pre><code class="language-python">foods_regular_transform = DataBlock(
+    blocks=(ImageBlock, CategoryBlock), 
+    get_items=get_image_files, 
+    splitter=RandomSplitter(valid_pct=0.2, seed=42),
+    get_y=parent_label,
+    item_tfms=Resize(128))
+dls = foods_regular_transform.dataloaders(path)
+foods_regular_transform = foods_regular_transform.new(item_tfms=Resize(128), 
+                  batch_tfms=aug_transforms(mult=2.0, 
+                                            do_flip=True, 
+                                            flip_vert=False,
+                                            max_rotate=10.0, 
+                                            min_zoom=1.0, 
+                                            max_zoom=1.2, 
+                                            max_lighting=0.3, 
+                                            max_warp=0.2, 
+                                            p_affine=0.75, 
+                                            p_lighting=0.9, 
+                                            xtra_tfms=None, 
+                                            size=None, 
+                                            mode='bilinear', 
+                                            pad_mode='reflection', 
+                                            align_corners=True, 
+                                            batch=False, min_scale=1.0))
+dls = foods_regular_transform.dataloaders(path)
+dls.train.show_batch(max_n=10, nrows=2, unique=True)
+</code></pre>
+
+<p><img src="/post/2020-09-27-more-with-less-how-data-augmentation-can-boost-model-performance/output_13_0.png" alt="png" /></p>
+
+<p>What I really love about these images is they really do look like different images of quesadillas. Some are darker, some are lighter, it appears as if we have a whole bunch of vantage points (thanks to the perspective warping which I love!). These synthetically generated images will allow our model to better generalize to new images of Mexican foods as the style of the image changed, but they all remain qualitatively quesadillas.</p>
+
+<p>Thanks for reading! Let me know if you have any comments or questions below!</p>
+
+<p>*This statement is touching upon the phenomenon that neural networks tend to be surprisingly robust to overfitting. The reasons why include Dropout, Architecture selection, regularization, and more data + data augmentation if applicable.</p>
+
+    </div>
+  </article>
+
+  
+<section id="comments">
+  <div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+  
+  };
+  (function() {
+    var inIFrame = function() {
+      var iframe = true;
+      try { iframe = window.self !== window.top; } catch (e) {}
+      return iframe;
+    };
+    if (inIFrame()) return;
+    var d = document, s = d.createElement('script');
+    s.src = '//mattkcole-com.disqus.com/embed.js'; s.async = true;
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58198392-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
+

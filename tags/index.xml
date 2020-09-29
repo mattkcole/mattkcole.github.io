@@ -84,11 +84,29 @@
     </item>
     
     <item>
+      <title>Data Augmentation</title>
+      <link>/tags/data-augmentation/</link>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/data-augmentation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Dplyr</title>
       <link>/tags/dplyr/</link>
       <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/tags/dplyr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Fast.ai</title>
+      <link>/tags/fast.ai/</link>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/fast.ai/</guid>
       <description></description>
     </item>
     
