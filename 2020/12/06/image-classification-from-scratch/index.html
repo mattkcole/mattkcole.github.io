@@ -1868,15 +1868,15 @@ accuracy: 95.42%
 
 <p>We now have an image classifier built from scratch! In building this tool, we also implemented SGD and found our performance to be pretty great for a few lines of code! Hopefully, you can take the information in this post and build your own classifier or extend this one!</p>
 
-<p>There were a few aspects of SGD and image classification that we glanced over, as well as a lot of tricks modern image recognition models use to improve speed and performance. But the core of these modern models is exactly what we just saw! Probably the most important</p>
+<p>There were a few aspects of SGD and image classification that we glanced over, as well as a lot of tricks modern image recognition models use to improve speed and performance. But the core of these modern models is exactly what we just saw!</p>
 
 <p>Other Notes:</p>
 
-<p>* The gradient here is the slope of the loss with respect to the model parameters. If we can compute the slope of the loss, we can move our parameters where the slope is negative to (hopefully) reduce our loss and yield a better model.</p>
+<p>* The gradient here is the slope of the loss with respect to the model parameters. If we can compute the slope of the loss, we can move our parameters where the slope is negative to reduce our loss and yield a better model.</p>
 
-<p>Example: we know loss(x,p) has derivative -2 at current p. Therefore increating the value of p a small amount should lower the value of loss(x,p&rsquo;).</p>
+<p>Example: we know loss(x,p) has derivative -2 at current p. Therefore increating the value of p a small amount (\(p_2=p-(-2) * \epsilon\) ) should lower the value of loss(x,\(p_2\)).</p>
 
-<p>** We can&rsquo;t have SGD without computing the gradient. The Pytorch <a href="https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html">autograd</a> is what computes the gradient (AKA derivative) for us. We totally took this crucial part for granted in this post, but it&rsquo;s a really important, and impressive piece of technology that drives modern deep learning.</p>
+<p>** We can&rsquo;t have SGD without computing the gradient. The Pytorch <a href="https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html">autograd</a> is what computes the gradients (AKA derivatives) for us. We totally took this crucial part for granted in this post, but it&rsquo;s a really important and impressive piece of technology that drives modern deep learning.</p>
 
     </div>
   </article>
