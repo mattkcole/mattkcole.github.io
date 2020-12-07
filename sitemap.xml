@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2020/12/06/image-classification-from-scratch/</loc>
+    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2020/09/27/more-with-less-how-data-augmentation-can-boost-model-performance/</loc>
     <lastmod>2020-09-27T00:00:00+00:00</lastmod>
   </url>
@@ -151,7 +156,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -162,8 +167,14 @@
   </url>
   
   <url>
+    <loc>/tags/deep-learning/</loc>
+    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/deep-learning/</loc>
-    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -241,13 +252,19 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/public-health/</loc>
     <lastmod>2020-04-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/pytorch/</loc>
+    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Deep Learning on Data &amp; Science: A blog</title>
-    <link>/categories/deep-learning/</link>
-    <description>Recent content in Deep Learning on Data &amp; Science: A blog</description>
+    <title>Pytorch on Data &amp; Science: A blog</title>
+    <link>/tags/pytorch/</link>
+    <description>Recent content in Pytorch on Data &amp; Science: A blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 06 Dec 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/categories/deep-learning/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/pytorch/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,15 +20,6 @@
       <description>This post will take us through the process of building, from scratch, an image classification model using stochastic gradient descent (SGD).
 Ok, great - building a model from scratch. But what should we model?
 Since the 90&amp;rsquo;s the default data set for testing out image classification models has been MNIST - a collection of 70,000 greyscale handwritten digits. For the most part it&amp;rsquo;s a great data set, the major drawback (in my opinion) - it&amp;rsquo;s incredibly boring (maybe if they used my handwriting it would be more exciting?</description>
-    </item>
-    
-    <item>
-      <title>More with Less - How Data Augmentation Can Boost Model Performance</title>
-      <link>/2020/09/27/more-with-less-how-data-augmentation-can-boost-model-performance/</link>
-      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/2020/09/27/more-with-less-how-data-augmentation-can-boost-model-performance/</guid>
-      <description>You may have heard that deep learning, particularly within image recognition situations, requires huge amounts of data. Mathematically, a ‘small’ ResNet-18 model has millions of trainable parameters, and as everyone knows from statistics class - we need more training data than model parameters, right?* While it remains true that, all else equal, the more data a model has access to in training the better it will perform - there are a few tricks we can use to increase the mileage of the data which we do have.</description>
     </item>
     
   </channel>

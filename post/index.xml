@@ -6,10 +6,21 @@
     <description>Recent content in Posts on Data &amp; Science: A blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 06 Dec 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Computer Vision From Scratch - Classifying Shirts and Sneakers with Pytorch &amp; FastAI</title>
+      <link>/2020/12/06/image-classification-from-scratch/</link>
+      <pubDate>Sun, 06 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/12/06/image-classification-from-scratch/</guid>
+      <description>This post will take us through the process of building, from scratch, an image classification model using stochastic gradient descent (SGD).
+Ok, great - building a model from scratch. But what should we model?
+Since the 90&amp;rsquo;s the default data set for testing out image classification models has been MNIST - a collection of 70,000 greyscale handwritten digits. For the most part it&amp;rsquo;s a great data set, the major drawback (in my opinion) - it&amp;rsquo;s incredibly boring (maybe if they used my handwriting it would be more exciting?</description>
+    </item>
     
     <item>
       <title>More with Less - How Data Augmentation Can Boost Model Performance</title>
